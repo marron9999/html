@@ -16,3 +16,8 @@ li {
 td * {
 	vertical-align:middle;
 }
+red {
+	color:red;
+	font-weight:bold;
+}
+

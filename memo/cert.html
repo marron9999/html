@@ -7,18 +7,53 @@
 <title>SSL CERT</title>
 <link type="text/css" href="memo.css" rel="stylesheet">
 <style>
+pre {
+	white-space: normal;
+	border: 1px solid #ccc;
+}
+pre code {
+	border: 0;
+	text-indent: -2em;
+	padding-left: 2em;
+}
 </style>
 </head>
 <body>
 <h2>SSL CERT</h2>
-<h4>Create CA</h4>
-<pre><code>sudo apt install nginx</code></pre>
+<h4>Create root ca</h4>
+<pre>
+<code>## --- ca.pem : root ca certification ---</code>
+<code>openssl genrsa -out ca.key 2048</code>
+<code>openssl req  -new -x509 -key ca.key -sha256  -days 1825 -extensions v3_ca  -out ca.pem -subj "/C=JP/ST=shizuoka/O=hiroyuki/CN=coderdojo-mn.com ca"</code>
+<code>openssl x509 -in ca.pem -out ca.pem</code>
+<code>openssl x509 -noout -text -in ca.pem > ca.pem.txt</code>
+</pre>
 
-<h4>Create IN-CA</h4>
-<pre><code>sudo apt install nginx</code></pre>
+<h4>Create inter ca</h4>
+<pre>
+<code>## --- inca.pem : inter ca certification ---</code>
+<code>openssl genrsa -out inca.key 2048</code>
+<code>openssl req -new -key inca.key -sha256 -outform PEM -keyform PEM -out inca.csr  -subj "/C=JP/ST=shizuoka/O=hiroyuk/CN=coderdojo-mn.com inter ca"</code>
+<code>openssl req -noout -text -in inca.csr > inca.csr.txt</code>
+<code>echo [ v3_ca ]>inca.cnf</code>
+<code>echo basicConstraints = CA:true, pathlen:0>>inca.cnf</code>
+<code>echo keyUsage = cRLSign, keyCertSign>>inca.cnf</code>
+<code>echo nsCertType = sslCA, emailCA>>inca.cnf</code>
+<code>openssl x509 -extfile inca.cnf -req -in inca.csr -sha256 -CA ca.pem -CAkey ca.key -set_serial 01  -extensions v3_ca  -days 1825 -out inca.pem</code>
+</pre>
 
-<h4>Create cert</h4>
-<pre><code>sudo apt install nginx</code></pre>
+<h4>Create server cert</h4>
+<pre>
+<code>## --- server.pem : server certification ---</code>
+<code>openssl genrsa -out server.key 2048</code>
+<code>openssl req -new -key server.key -outform PEM -keyform PEM -sha256 -out server.csr -subj "/C=JP/ST=shizuoka/L=numazu/O=hiroyuki/OU=develop/CN=coderidojo-mn.com"</code>
+<code>openssl req -noout -text -in server.csr > server.csr.txt</code>
+<code>echo subjectAltName = DNS:localhost, DNS:server, DNS:*.coderdojo-mn.com, IP:153.127.193.129> server.san</code>
+<code>openssl x509 -req -in server.csr -sha256 -CA inca.pem -CAkey inca.key -set_serial 01 -days 730 -out server.pem  -extfile server.san</code>
+<code>openssl x509 -noout -text -in server.pem > server.pem.txt</code>
+<code>cat server.pem >server+inca.pem</code>
+<code>cat inca.pem  >>server+inca.pem</code>
+</pre>
 
 </body>
 </html>

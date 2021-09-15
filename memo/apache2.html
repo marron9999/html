@@ -22,11 +22,93 @@
 </ul>
 
 <h4>Config</h4>
-<p>/etc/apache2/apache.conf</p>
-<pre><code>sudo apt install nginx</code></pre>
+<p>/etc/apache2/apache2.conf</p>
+<pre><code>&nbsp;&nbsp;:
 
-<p>/etc/apache2/sites-avali/000-default</p>
-<pre><code>sudo apt install nginx</code></pre>
+# Sets the default security model of the Apache2 HTTPD server. It does
+# not allow access to the root filesystem outside of /usr/share and /var/www.
+# The former is used by web applications packaged in Debian,
+# the latter may be used for local directories served by the web server. If
+# your system is serving content from a sub-directory in /srv you must allow
+# access here, or in any related virtual host.
+&lt;Directory />
+        Options FollowSymLinks
+        AllowOverride None
+        Require all denied
+&lt;/Directory>
+
+&lt;Directory /usr/share>
+        AllowOverride None
+        Require all granted
+&lt;/Directory>
+
+&lt;Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+&lt;/Directory>
+
+<red>&lt;Directory /home/ubuntu>
+        Require all granted
+&lt;/Directory></red>
+
+#&lt;Directory /srv/>
+#       Options Indexes FollowSymLinks
+#       AllowOverride None
+#       Require all granted
+#&lt;/Directory>
+
+&nbsp;&nbsp;:
+</code></pre>
+
+<p>/etc/apache2/ports.conf</p>
+<pre><code># If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+<red>Listen 8887
+
+##&lt;IfModule ssl_module>
+#       Listen 443
+##&lt;/IfModule>
+
+##&lt;IfModule mod_gnutls.c>
+#       Listen 443
+##&lt;/IfModule></red>
+</code></pre>
+
+<p>/etc/apache2/1 sites-available/000-default.conf</p>
+<pre><code><red>&lt;VirtualHost *:8887></red>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        <red>#DocumentRoot /var/www/html
+        DocumentRoot /home/ubuntu</red>
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+&lt;/VirtualHost>
+</code></pre>
 
 
 </body>
