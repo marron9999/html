@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SERVER</title>
+<link type="text/css" href="index/memo.css" rel="stylesheet">
+<style>
+td {
+	padding: 2px 10px;
+	white-space:nowrap;
+}
+.l {
+	border-left:1px solid #ccc;
+}
+.r {
+	border-right:1px solid #ccc;
+}
+tr.u > * {
+	border-bottom:1px solid #ccc;
+}
+tr.o > * {
+	border-top:1px solid #ccc;
+}
+</style>
+</head>
+<body>
+<h4>構成コンポーネント</h4>
+<table>
+<tr class="o u"><th>in-bound</th><th class="l r">App</th><th>←→</th><th colspan=2 class=l>App</th></tr>
+<tr class="u">
+<td>https:443/ </td>
+<td rowspan=4 class="l r"><img src=index/nginx.png width=80></td>
+<td>http:8887/</td>
+<td class="l r" rowspan=2><img src=index/apache2.png width=80 class=b</td>
+<td>/home/ubunts/html</td>
+</tr><tr class=u>
+<td>https:443/scratch </td>
+<td>http:8887/scratch</td>
+<td>/home/ubunts/scratch</td>
+</tr><tr class=u>
+<td>https:443/app</td>
+<td>http:8888/</td>
+<td class="l r" rowspan=2><img src=index/nodejs.png width=80></td>
+<td>/home/ubunts/radio/server.js</td>
+</tr><tr class=u>
+<td>wss:443/wss</td>
+<td>ws:8888/</td>
+<td>/home/ubunts/radio/server.js</td>
+</tr>
+<tr class="u">
+<td>http:80</td>
+<td colspan=4 class=l>minecraft</td>
+</tr>
+<tr class="u">
+<td>ssh:22</td>
+<td colspan=4 class=l>sshd</td>
+</tr>
+</table>
+
+<h4>gitリポジトリ → /home/ubunts/＊</h4>
+<table>
+<tr class="o u"><th>＊</th><th class="l">github</th></tr>
+<tr class="u">
+<td>html</td>
+<td class=l>git clone https://github.com/coderdojo-mishima-numazu/dojopaas-html.git html</td>
+</tr><tr class=u>
+<td>scratch</td>
+<td class=l>git clone -b gh-pages https://github.com/marron9999/scratch-gui.git scratch</td>
+</tr><tr class=u>
+<td>radio</td>
+<td class=l>git clone https://github.com/marron9999/radio.git</td>
+</tr>
+</table>
+
+<h4>Config</h4>
+<ul>
+<li><a href=memo/dns.html>Config DNS</a></li>
+<li><a href=memo/cert.html>Create server cert</a></li>
+<li><a href=memo/nginx.html>Setup nginx</a></li>
+<li><a href=memo/apache2.html>Setup apache2</a></li>
+<li><a href=memo/nodejs.html>Setup node.js</a></li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DNS</title>
+<link type="text/css" href="memo.css" rel="stylesheet">
+<style>
+</style>
+</head>
+<body>
+<h4>Config DNS</h4>
+<p>/etc/systemd/resolved.conf</p>
+<pre><code>[Resolve]
+DNS=8.8.8.8 8.8.4.4</code></pre>
+
+<div class=code>sudo systemctl restart systemd-resolved<br>
+sudo systemd-resolve --status</div>
+
+</body>
+</html>
