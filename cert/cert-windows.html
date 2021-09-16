@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SSL CERT</title>
+<link type="text/css" href="cert.css" rel="stylesheet">
+<style>
+img {
+	margin:10px 20px;
+	vertical-align:top;
+	border:1px solid #ccc;
+}
+div > small {
+	margin-left:20px;
+	color:red;
+}
+div > small > span {
+	display: inline-block;
+	vertical-align:text-top;
+}
+</style>
+</head>
+<body>
+<h3>Windowsに認証書（<a href=server.cer>server.cer</a>）を取りこみます<br>
+認証書は事前にダウンロードしておいてください</h3>
+
+<li>コントロールパネルの「インターネットオプション」を開き、「証明書」をクリックし、「インポート」をクリックします</li>
+
+<div><img src=cli-1.png><img src=cli-2.png></div>
+
+<li>ウイザードの開始で「次へ」をクリックし、認証書（server.cer）のフルパス名を指定し「次へ」をクリックします</li>
+
+<div><small>（注）下のイメージでは「ca.pem.cer」と表示されています</small><br>
+<img src=cli-3.png><img src=cli-4.png></div>
+
+
+<li>「証明書をすべて次のストアに配置する」を選択し、「信頼されたルート証明機関」を指定し、「次へ」をクリックし、次の画面で「完了」をクリックします</li>
+
+<div><small>（注）下のイメージでは「ca.pem.cer」と表示されています</small><br>
+<img src=cli-5.png><img src=cli-6.png></div>
+
+<li>「セキュリティ警告」で「はい」をクリックし、「正しくインポートされました」が表示されたら、インポートは終わりです</li>
+
+<div><small>（注）<span>下のイメージでは「my-scratch CA」と表示されていますが、実際は「coderdojo-mn.com ca」と表示されます<br>
+また、拇印の文字列は異なった文字列が表示されます</span></small><br>
+<img src=cli-7.png><img src=cli-8.png></div>
+
+<li>証明書の一覧にインポートした証明書が表示されていることを確認して終わりです</li>
+
+<div><small>（注）<span>下のイメージでは「my-scratch CA」と表示されていますが、実際は「coderdojo-mn.com ca」と表示されます</span></small><br>
+<img src=cli-9.png></div>
+
+</body>
+</html>

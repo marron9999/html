@@ -102,11 +102,12 @@ ul {
 	height:auto;
 }
 #menu > div.item {
-	padding: 20px 10px;
+	padding: 10px 10px;
+	padding-top:15px;
 	margin-left:10px;
 	display:block;
 	float:left;
-	width:180px;
+	width:160px;
 	height:120px;
 	margin-left:20px;
 	margin-top:10px;
@@ -123,5 +124,8 @@ ul {
 }
 #txs {
 	font-size:12px;
+	margin-left:20px;
+}
+#menu > a {
 	margin-left:20px;
 }
