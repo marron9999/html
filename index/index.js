@@ -1,5 +1,6 @@
 function select(e) {
 	const list = {
+		programming:"lesson.html",
 		scratch:"scratch/",
 		radio:"radio.html",
 		othello:"othello.html",
