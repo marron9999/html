@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="widdiv=device-widdiv,initial-scale=1">
+<title>Lesson 4</title>
+<link type="text/css" href="lesson.css" rel="stylesheet">
+<style>
+.x, .b {
+	height:13px;
+	font-size:9px;
+}
+.x > div,
+.b > div {
+	padding:0;
+	border:1px solid gray;
+	width:12px;
+	height:12px;
+	display: inline-block;
+	vertical-align:top;
+	text-align:center;
+	margin-top: -1px;
+	margin-left: -1px;
+}
+.b > div:first-child {
+	border-color: white;
+}
+.x > div {
+	border-color: white;
+}
+</style>
+</head>
+<body>
+<h3>Lesson 4 「オセロ」を表示してみよう</h3>
+
+<table>
+<tr><td valign=top><img src=../othello/othello.png></td>
+<td style="padding-left:10px;">オセロプログラムは、無線の受信・送信を行うスプライト（メイン）と、
+クローン64個のスプライト（コマ）の構成で動かします<br>
+盤の座標は、以下の値を使います<br>
+<div class=x><div></div><div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div></div>
+<div class=b><div>0</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>1</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>2</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>3</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>4</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>5</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>6</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>7</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</td></tr></table>
+
+<h4>まず、スプライト（コマ）を作ります</h4>
+
+<li>スプライト（コマ）は「隠す」ようにしておきます<br>
+
+<div><img src=l2_hide.png></div></li>
+
+<li>コマ（イメージ）の大きさは、横20ｘ縦20 で作ります<br>
+
+<div><img src=l2_base.png></div></li>
+
+<li>メインとコマのスプライト間で使う変数 X、Y、Z を作ります<br>
+
+<div><img src=l2_var1.png width=250></div></li>
+
+<li>コマのスプライトのみで使う変数 _X、_Y、_Z を作ります<br>
+
+<div><img src=l2_var2.png width=250></div></li>
+
+<li>クローンされたとき _X、_Y、_Zの値を設定します<br>
+
+<div><img src=l2_new.png></div></li>
+
+<li><span>メッセージ INIT を受信したとき、_X、_Y の値を決定します<br>
+また、_X、_Yの値に応じて表示位置を決めます<br>
+横位置 = _X * 21 + 10<br>
+縦位置 = -10 - _Y * 21</span><br>
+
+<div><img src=l2_init.png></div></li>
+
+<li>メッセージ SET を受信したとき、かつ、X、Y に一致する場合、スプライトの表示を変えます<br>
+
+<div><img src=l2_set.png></div></li>
+
+<h4>スプライト（メイン）を作ります</h4>
+
+<li>「実行されたら」に</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>利用するバンド、グループを宣言するブロツクを配置します</li>
+<li>スプライト（コマ）のクローンとメッセージ INIT の組みを64回繰り返します</li>
+
+<div><img src=l2_run.png></div>
+
+</div>
+
+<li>「ずっと」の前に"start"を送信し、「ずっと」の中に受信した文字列を処理するブロックを配置します</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>メインのスプライトのみで使う変数 _V1、_V2を作ります</li>
+<li>「board」から始まる場合は、それぞれの位置のスプライトを変更します</li>
+<li>「stone」から始まる場合は、指定された位置のスプライトを変更します</li>
+<li>「board」「stone」の意味は <a href=../othello/docs.html>othello/docs.html</a> を見てください</li>
+
+<div><img src=l2_loop.png></div>
+
+</div>
+
+<li>他人からの通信を確認してみよう</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>Scratchプログラムを実行した状態で、<a href=/othello.html target=docs>othello.html</a> を開きます</li>
+
+<li><span>othello.html上で白コマをはさめる位置をクリツクします<br>
+Scratchプログラムに最新の盤の状態（othello.htmlと同じ状態）が表示されたらOKです</span><br>
+
+<div><img src=l2_html.png width=300><img src=l2_scratch.png></div></li>
+
+<hr>
+
+<h4>【自由研究】ゲームできるように改造してみよう</h4>
+
+<p><a href=../othello/docs.html>othello/docs.html</a> を見て、スクラッチからオセロゲームができるようにしてみよう</p>
+
+<li>どちらがコマを打てるかは「player」の文字列でわかります</li>
+<li>白、黒のコマ数は「white」「black」の文字列でわかります</li>
+<li><span>コマをおく操作は、「このスプライトが押されたとき」になります<br>
+スプライトの座標は、_X、_Y になります</span></li>
+
+</body>
+</html>
