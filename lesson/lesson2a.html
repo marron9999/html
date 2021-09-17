@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 2</title>
+<link type="text/css" href="lesson.css" rel="stylesheet">
+<style>
+</style>
+</head>
+<body>
+<h3>Lesson 2 「3D迷路」(2D)を表示してみよう</h3>
+
+<div><img src=maze2.png></div>
+
+<p>迷路プログラムは、無線の受信・送信を行うスプライト（メイン）と、コマ用スプライト（64個のクローン）の構成で作ります</p>
+
+<li>まず、迷路（地図）のスプライト（）を作ります</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>コマの大きさは、横30ｘ縦30 で作ります
+
+<div><img src=l3_img.png></li>
+
+<li><span>クローンされたときX、Yの値を決めます<br>
+X、Yの値に応じた位置に表示します</span><br>
+
+<div><img src=l3_stone.png></div></li>
+
+<li>メッセージを受信したときスプライトの表示を変えます<br>
+
+<div><img src=l3_event.png></div></li>
+
+</div>
+
+<li>「実行されたら」に</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>利用するバンド、グループを宣言するブロツクを配置します</li>
+<li>コマのスプライトを64個作ります</li>
+
+<div><img src=l3_band.png></div>
+
+</div>
+
+<li>「ずっと」に文字列を受信したら、その文字列の意味を表現するブロックを配置します</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>「board」から始まる場合は、それぞれの位置のスプライトを変更します</li>
+<li>「stone」から始まる場合は、指定された位置のスプライトを変更します</li>
+
+<div><img src=l3_text.png></div>
+
+</div>
+
+<li>他人からの通信を確認してみよう</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>Scratchプログラムを実行した状態で、<a href=/othello.html>othello.html</a>を開きます</li>
+
+<li>othello.html上で白コマをはさめる位置をクリツクします<br>
+
+<div><img src=l3_click.png></div></li>
+
+<li>Scratchプログラムに最新の盤の状態（othello.htmlと同じ状態）が表示されたらOKです<br>
+
+<div><img src=l3_ok.png></div></li>
+
+</body>
+</html>

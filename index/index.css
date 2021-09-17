@@ -22,9 +22,10 @@ ul {
 #foot {
 	bottom:0;
 	margin-top: 10px;
-	height:80px;
+	height:70px;
 	width:calc(100%);
 	position:fixed;
+	border-top: 1px solid #ccc;
 }
 #td0 {
 	position:absolute;
@@ -99,7 +100,8 @@ ul {
 	position:fixed;
 	top: 80px;
 	width:calc(100%);
-	height:auto;
+	height:calc(100% - 160px);
+	overflow: auto;
 }
 #menu > div.item {
 	padding: 10px 10px;

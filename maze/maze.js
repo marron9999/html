@@ -219,6 +219,7 @@ function keydown(event){
 
 var band = 83;
 var group = 0;
+var addr = "";
 
 window.onload = function() {
 	let url = wspath();
@@ -246,13 +247,28 @@ window.onload = function() {
 };
 
 function message(msg) {
-	if(msg.data.indexOf("title") == 0) {
-		let p = msg.data.indexOf(" ");
-		document.title = msg.data.substr(p+1).trim();
+	msg = msg.data;
+	if(msg.indexOf("title") == 0) {
+		let p = msg.indexOf(" ");
+		addr = msg.substr(p+1).trim();
+		document.title = addr;
+		p = addr.indexOf(" ");
+		addr = addr.substr(0, p);
 		return;
 	}
-	if(msg.data.indexOf("S:") != 0) return;
-	let v = msg.data.substr(2).trim().split(" ");
+	if(msg.indexOf("users") == 0) {
+		let e = document.getElementById("client");
+		e.innerHTML = "";
+		let n = msg.replace(/,/g, " ").split(" ");
+		for(let i=3; i<n.length; i++) {
+			if(n[i] == addr)
+				e.innerHTML += "<div>[" + n[i] + "]</div>";
+			else e.innerHTML += "<div>" + n[i] + "</div>";
+		}
+		return;
+	}
+	if(msg.indexOf("S:") != 0) return;
+	let v = msg.substr(2).trim().split(" ");
 	if(v[0] == "S") {
 		size[0] = parseInt(v[1]);
 		size[1] = parseInt(v[2]);

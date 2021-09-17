@@ -3,6 +3,8 @@ var rc = 0;
 var conn;
 var band = 80;
 var group = 0;
+var addr = "";
+
 window.onload = function () {
 	let url = wspath();
 	conn = new WebSocket(url);
@@ -70,17 +72,31 @@ var sec = [];
 var stat = null;
 var short = null;
 var game = null;
-function onmessage(e) {
-	e = e.data;
-	if(e.indexOf("title") == 0) {
-		let p = e.indexOf(" ");
-		document.title = e.substr(p+1).trim();
-		name = document.title.substr(0, document.title.indexOf(" "));
+
+function onmessage(msg) {
+	msg = msg.data;
+	if(msg.indexOf("title") == 0) {
+		let p = msg.indexOf(" ");
+		addr = msg.substr(p+1).trim();
+		document.title = addr;
+		p = addr.indexOf(" ");
+		addr = addr.substr(0, p);
 		return;
 	}
-	if(e.indexOf("S:") != 0) return;
-	e  = e.substr(2);
-	let v  = e.split(" ");
+	if(msg.indexOf("users") == 0) {
+		let e = document.getElementById("client");
+		e.innerHTML = "";
+		let n = msg.replace(/,/g, " ").split(" ");
+		for(let i=3; i<n.length; i++) {
+			if(n[i] == addr)
+				e.innerHTML += "<div>[" + n[i] + "]</div>";
+			else e.innerHTML += "<div>" + n[i] + "</div>";
+		}
+		return;
+	}
+	if(msg.indexOf("S:") != 0) return;
+	msg = msg.substr(2);
+	let v  = msg.split(" ");
 	if(v[0] == "game") {
 		let y = parseInt(v[1]);
 		if(y == 0) {
@@ -134,10 +150,10 @@ function onmessage(e) {
 	} else if(v[0] == "sec") {
 		sec = [parseInt(v[1]), parseInt(v[2])];
 	}
-	v = e.indexOf(" ");
+	v = msg.indexOf(" ");
 	let m = (v[0] == "msg")? "class=m" : "";
 	stat.innerHTML += "<tr>"
-		+ "<td>" + e.substr(0,v) + "</td>"
+		+ "<td>" + msg.substr(0,v) + "</td>"
 		+ "<td>&nbsp;</td>"
-		+ "<td " + m + ">" + e.substr(v+1) +"</td></tr>";
+		+ "<td " + m + ">" + msg.substr(v+1) +"</td></tr>";
 }

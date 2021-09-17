@@ -107,3 +107,12 @@ body {
 75% {	transform: rotateY(45deg); border-color: white; }
 100% {	transform: rotateY(0deg); border-color: white; }
 }
+
+#client {
+	display:inline-block;
+	position: fixed;
+	right:0;
+	border-left:1px solid #ccc;
+	padding:0px 10px;
+	font-size:12px;
+}
