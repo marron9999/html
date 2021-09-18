@@ -4,56 +4,117 @@
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 2</title>
+<title>Lesson 3</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
+.x, .b {
+	height:13px;
+	font-size:9px;
+}
+.x > div,
+.b > div {
+	padding:0;
+	border:1px solid gray;
+	width:12px;
+	height:12px;
+	display: inline-block;
+	vertical-align:top;
+	text-align:center;
+	margin-top: -1px;
+	margin-left: -1px;
+	white-space:nowrap;
+}
+.b > div:first-child {
+	border-color: white;
+}
+.x > div {
+	border-color: white;
+}
 </style>
 </head>
 <body>
-<h3>Lesson 2 「3D迷路」(2D)を表示してみよう</h3>
+<h3>Lesson 2 「迷路」(2D)を表示してみよう</h3>
 
-<div><img src=maze2.png></div>
+<table>
+<tr><td valign=top><img src=maze2.png></td>
+<td style="padding-left:10px;">迷路プログラムは、無線の受信・送信を行うスプライト（メイン）と、
+迷路を表示するスプライト（マップ）の構成で動かします<br>
+マップの座標は、以下の値を使います<br>
 
-<p>迷路プログラムは、無線の受信・送信を行うスプライト（メイン）と、コマ用スプライト（64個のクローン）の構成で作ります</p>
+<br>
+<div class=x><div></div><div>0</div><div>1</div><div>2</div><div>3</div><div>...</div><div>m</div></div>
+<div class=b><div>0</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>1</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>2</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>3</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>:</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=b><div>m</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</td></tr></table>
 
-<li>まず、迷路（地図）のスプライト（）を作ります</li>
+<h4>迷路プログラムでは拡張機能の「Radio」と「ペン」を使います<br>
+拡張機能を追加で「Radio」と「ペン」を組みこんでください</h4>
 
-<div style="margin-left:20px;margin-top:10px;">
+<h4>まず、スプライト（マップ）を作ります</h4>
 
-<li>コマの大きさは、横30ｘ縦30 で作ります
+<li>メインとマップのスプライト間で使う変数 X、Y、Z を作ります</li>
+<li>迷路の大きさの変数 SX、SY、<br>
+ゴール位置の変数 GX、GY、<br>
+現在位置の変数 CX、CY、CZ も作ります</li>
 
-<div><img src=l3_img.png></li>
+<li>それから迷路データを入れるリスト MAP を作ります<br>
 
-<li><span>クローンされたときX、Yの値を決めます<br>
-X、Yの値に応じた位置に表示します</span><br>
+<div><img src=l3_map.png width=250></div></li>
 
-<div><img src=l3_stone.png></div></li>
+<li>迷路データ全体を表示するブロック（DRAWを受け取ったとき）、<br>
+１行分を表示するブロック(DRAWLINE)、<br>
+点を表示するブロック(DRAWPOINT)、<br>
+ペン動作のブロック(DRAWPEN)をそれぞれ作ります</br>
 
-<li>メッセージを受信したときスプライトの表示を変えます<br>
+<div><img src=l3_draw.png></div></li>
 
-<div><img src=l3_event.png></div></li>
+<li>現在の位置を表示するブロック（SHOWを受け取ったとき）、<br>
+現在の位置を隠すブロック（HIDEを受け取ったとき）、<br>
+指定位置を表示するブロック（POINTを受け取ったとき）も作ります</br>
+
+<div><img src=l3_draw2.png></div></li>
+
+<h4>スプライト（メイン）を作ります</h4>
+
+<li>上向き矢印のイメージをコスチュームとして設定します<br>
+
+<div><img src=l3_arrow.png width=400></div></li>
+
+<li>「実行が押されたとき」に利用するバンド、グループを宣言するブロックを配置します</li>
+
+<div><img src=l3_run.png></div>
 
 </div>
 
-<li>「実行されたら」に</li>
+<li>メインのスプライトのみで使う変数 _V、_V1、_V2 を作ります</li>
 
-<div style="margin-left:20px;margin-top:10px;">
+<li>「ずっと」の前に"s"を送信し、「ずっと」の中に受信した文字列を処理するブロックを配置します</li>
 
-<li>利用するバンド、グループを宣言するブロツクを配置します</li>
-<li>コマのスプライトを64個作ります</li>
+<table class=t>
+<tr><td><img src=l3_loop.png></td>
+<td></td></tr>
+<tr><td><img src=l3_loop1.png></td>
+<td>「M」から始まる場合は、迷路データを設定します</td></tr>
+<tr><td><img src=l3_loop2.png></td>
+<td>「T」から始まる場合は、指定位置から指定方向のデータを設定します</td></tr>
+<tr><td colspan=2><img src=l3_loop21.png></td></tr>
+<tr><td><img src=l3_loop22.png></td>
+<tr><td></td></tr>
+<tr><td><img src=l3_loop3.png></td>
+<td>「Y」から始まる場合は、現在位置を変数に設定し、迷路を表示します</td></tr>
+<tr><td><img src=l3_loop4.png></td>
+<td>「G」から始まる場合は、ゴール位置を変数に設定します</td></tr>
+<tr><td><img src=l3_loop5.png></td>
+<td>「S」から始まる場合は、迷路の大きさを変数に設定します</td></tr>
+</table>
 
-<div><img src=l3_band.png></div>
+<li>各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</li>
 
-</div>
-
-<li>「ずっと」に文字列を受信したら、その文字列の意味を表現するブロックを配置します</li>
-
-<div style="margin-left:20px;margin-top:10px;">
-
-<li>「board」から始まる場合は、それぞれの位置のスプライトを変更します</li>
-<li>「stone」から始まる場合は、指定された位置のスプライトを変更します</li>
-
-<div><img src=l3_text.png></div>
+<div></div>
 
 </div>
 
@@ -61,15 +122,22 @@ X、Yの値に応じた位置に表示します</span><br>
 
 <div style="margin-left:20px;margin-top:10px;">
 
-<li>Scratchプログラムを実行した状態で、<a href=/othello.html>othello.html</a>を開きます</li>
+<li>Scratchプログラムを実行した状態で、<a href=/maze.html target=docs>maze.html</a> を開きます</li>
 
-<li>othello.html上で白コマをはさめる位置をクリツクします<br>
+<li><span>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
+Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ状態）が表示されたらOKです</span><br>
 
-<div><img src=l3_click.png></div></li>
+<div><img src=l3_html.png width=300><img src=l3_scratch.png width=250 style="vertical-align:bottom;"></div></li>
 
-<li>Scratchプログラムに最新の盤の状態（othello.htmlと同じ状態）が表示されたらOKです<br>
+</div></div>
 
-<div><img src=l3_ok.png></div></li>
+<hr>
+
+<h4>【自由研究】ゲームできるように改造してみよう</h4>
+
+<p><a href=../maze/docs.html>maze/docs.html</a> を見て、Scratchから迷路ゲームができるようにしてみよう</p>
+
+<li>↑↓←→のキー操作ができるようにしよう</li>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="IE=Edge">
 <meta name="viewport" content="widdiv=device-widdiv,initial-scale=1">
-<title>Lesson 4</title>
+<title>Lesson 2</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
 .x, .b {
@@ -72,12 +72,18 @@
 
 <div><img src=l2_new.png></div></li>
 
-<li><span>メッセージ INIT を受信したとき、_X、_Y の値を決定します<br>
-また、_X、_Yの値に応じて表示位置を決めます<br>
-横位置 = _X * 21 + 10<br>
-縦位置 = -10 - _Y * 21</span><br>
+<li><span>メッセージ INIT を受信したとき</li>
 
-<div><img src=l2_init.png></div></li>
+<table class=t>
+<tr><td><img src=l2_init.png></td>
+<td></td></tr>
+<tr><td><img src=l2_init1.png></td>
+<td>_X、_Y の値を決定します</td></tr>
+<tr><td><img src=l2_init2.png></td>
+<td>_X、_Yの値に応じて表示位置を決めます<br>
+横位置 = _X * 21 + 10<br>
+縦位置 = -10 - _Y * 21</td></tr>
+</table>
 
 <li>メッセージ SET を受信したとき、かつ、X、Y に一致する場合、スプライトの表示を変えます<br>
 
@@ -85,11 +91,11 @@
 
 <h4>スプライト（メイン）を作ります</h4>
 
-<li>「実行されたら」に</li>
+<li>「実行が押されたとき」に</li>
 
 <div style="margin-left:20px;margin-top:10px;">
 
-<li>利用するバンド、グループを宣言するブロツクを配置します</li>
+<li>利用するバンド、グループを宣言するブロックを配置します</li>
 <li>スプライト（コマ）のクローンとメッセージ INIT の組みを64回繰り返します</li>
 
 <div><img src=l2_run.png></div>
@@ -101,11 +107,17 @@
 <div style="margin-left:20px;margin-top:10px;">
 
 <li>メインのスプライトのみで使う変数 _V1、_V2を作ります</li>
-<li>「board」から始まる場合は、それぞれの位置のスプライトを変更します</li>
-<li>「stone」から始まる場合は、指定された位置のスプライトを変更します</li>
-<li>「board」「stone」の意味は <a href=../othello/docs.html>othello/docs.html</a> を見てください</li>
 
-<div><img src=l2_loop.png></div>
+<table class=t>
+<tr><td><img src=l2_loop.png></td>
+<td></td></tr>
+<tr><td><img src=l2_loop1.png></td>
+<td>「board」から始まる場合は、それぞれの位置のスプライトを変更します</td></tr>
+<tr><td><img src=l2_loop2.png></td>
+<td>「stone」から始まる場合は、指定された位置のスプライトを変更します</td></tr>
+</table>
+
+<li>「board」「stone」の意味は <a href=../othello/docs.html>othello/docs.html</a> を見てください</li>
 
 </div>
 
@@ -115,21 +127,23 @@
 
 <li>Scratchプログラムを実行した状態で、<a href=/othello.html target=docs>othello.html</a> を開きます</li>
 
-<li><span>othello.html上で白コマをはさめる位置をクリツクします<br>
-Scratchプログラムに最新の盤の状態（othello.htmlと同じ状態）が表示されたらOKです</span><br>
+<li>othello.html上で白コマをはさめる位置をクリックします<br>
+Scratchプログラムに最新の盤の状態（othello.htmlと同じ状態）が表示されたらOKです<br>
 
 <div><img src=l2_html.png width=300><img src=l2_scratch.png></div></li>
+
+</div></div>
 
 <hr>
 
 <h4>【自由研究】ゲームできるように改造してみよう</h4>
 
-<p><a href=../othello/docs.html>othello/docs.html</a> を見て、スクラッチからオセロゲームができるようにしてみよう</p>
+<p><a href=../othello/docs.html>othello/docs.html</a> を見て、Scratchからオセロゲームができるようにしてみよう</p>
 
 <li>どちらがコマを打てるかは「player」の文字列でわかります</li>
 <li>白、黒のコマ数は「white」「black」の文字列でわかります</li>
-<li><span>コマをおく操作は、「このスプライトが押されたとき」になります<br>
-スプライトの座標は、_X、_Y になります</span></li>
+<li>コマをおく操作は、「このスプライトが押されたとき」になります<br>
+スプライトの座標は、_X、_Y になります</li>
 
 </body>
 </html>
