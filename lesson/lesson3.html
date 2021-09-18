@@ -65,6 +65,8 @@
 
 <div><img src=l3_map.png width=250></div></li>
 
+<li>マップのスプライトのみで使う変数 _X、_Y、_Z、_C を作ります</li>
+
 <li>迷路データ全体を表示するブロック（DRAWを受け取ったとき）、<br>
 １行分を表示するブロック(DRAWLINE)、<br>
 点を表示するブロック(DRAWPOINT)、<br>
@@ -130,6 +132,14 @@ Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ
 <div><img src=l3_html.png width=300><img src=l3_scratch.png width=250 style="vertical-align:bottom;"></div></li>
 
 </div></div>
+
+<hr>
+
+<h4>迷路の表示って遅いよね、一度にパッと表示させることができます。</h4>
+
+<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。例えば「Y」から始まる場合の処理は以下のようにします。</p>
+
+<div><img src=l3_redraw.png></div>
 
 <hr>
 

@@ -4,14 +4,79 @@
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 3</title>
+<title>Lesson 4</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
 </style>
 </head>
 <body>
-<h3>Lesson 3 「3D迷路」(3D)を表示してみよう</h3>
-<div><img src=maze3.png></div>
+<h3>Lesson 4 「迷路」(3D)を表示してみよう</h3>
+
+<table>
+<tr><td valign=top><img src=maze3.png width=200></td>
+<td style="padding-left:10px;" valign=top>レッスン３で作った迷路プログラムを改造して、３Ｄで迷路が表示できろようにしましょう</td></tr></table>
+
+<h4>スプライト（マップ）に３Ｄ表示させるブロックを作ります</h4>
+
+<li>３Ｄ表示する／しないを判定する変数 3D を作ります</li>
+
+<li>迷路データ全体を消するブロック（CLEARを受け取ったとき）、<br>
+１つの壁を表示するブロック(VIEWを受け取ったとき)、それぞれ作ります</br>
+
+<div><img src=l4_clear.png></div><br>
+<div><img src=l4_frame.png></div></li>
+
+<h4>スプライト（メイン）を作ります</h4>
+
+<li>「実行が押されたとき」に変数 3D を「３Ｄ表示しない：0」にします<br>
+
+<div><img src=l4_2d.png></div></li>
+
+<li>２Ｄ／３Ｄを切り替えるブロックを配置します<br>
+
+<div><img src=l4_3d.png></div></li>
+
+<li>「ずっと」の最後に壁データを処理するブロックを配置します</li>
+
+<table class=t>
+<tr><td><img src=l4_loop5.png></td>
+<td></td></tr>
+<tr><td><img src=l4_view.png></td>
+<td>「V」から始まる場合は、壁を３Ｄで表示します</td></tr>
+</table>
+
+<li>各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</li>
+
+</div>
+
+<li>他人からの通信を確認してみよう</li>
+
+<div style="margin-left:20px;margin-top:10px;">
+
+<li>Scratchプログラムを実行した状態で、<a href=/maze.html target=docs>maze.html</a> を開きます</li>
+
+<li><span>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
+Scratchプログラムに最新の迷路の状態（maze.htmlの3D viewと同じ状態）が表示されたらOKです</span><br>
+
+<div><img src=l4_html.png width=180><img src=l4_scratch.png width=260 style="vertical-align:bottom;margin-bottom:10px;"></div></li>
+
+</div></div>
+
+<hr>
+
+<h4>迷路の表示って遅いよね、一度にパッと表示させることができます。</h4>
+
+<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。例えば「Y」から始まる場合の処理は以下のようにします。</p>
+
+<div><img src=l4_redraw.png></div>
+
+<hr>
+
+<h4>【自由研究】ゲームできるように改造してみよう</h4>
+
+<p><a href=../maze/docs.html>maze/docs.html</a> を見て、Scratchから迷路ゲームができるようにしてみよう</p>
+
+<li>↑↓←→のキー操作ができるようにしよう</li>
 
 </body>
 </html>
