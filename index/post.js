@@ -14,7 +14,7 @@ function post_init(id, parent) {
 	if(v != null && v != "") {
 		document.getElementById("post_name").value = v;
 	}
-	post_load();
+	post_load(post_id);
 }
 
 function post() {
@@ -29,8 +29,8 @@ function post() {
 	post_xhr("/app/post", value, function(text) { post_log(text); });
 	t.value = "";
 }
-function post_load() {
-	post_xhr("/app/load", post_id, function(text) { post_log(text); });
+function post_load(id) {
+	post_xhr("/app/load", id, function(text) { post_log(text); });
 }
 function post_xhr(url, data, func) {
 	data = encodeURIComponent(data);
@@ -78,4 +78,16 @@ function post_log(text) {
 		document.getElementById(t.substr(1)).innerHTML
 			+= "<div style='white-space:pre;color:blue;padding-left:1em;'>" + text[i] + "</div>";
 	}
+}
+function post_dir(func) {
+	const req = new XMLHttpRequest();
+	req.onload = function() {
+		func(decodeURIComponent(req.responseText));
+	}
+	req.open("post", "/app/dir");
+	req.setRequestHeader( 'Content-Type', 'text/html' );
+	req.send("");
+}
+function post_get(id, func) {
+	post_xhr("/app/log", id, func);
 }
