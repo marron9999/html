@@ -98,21 +98,21 @@ ul {
 
 #menu {
 	position:fixed;
-	top: 80px;
-	width:calc(100%);
-	height:calc(100% - 160px);
+	top: 71px;
+	width:calc(100% - 40px);
+	height:calc(100% - 142px);
 	overflow: auto;
+	padding: 0 20px;
 }
 #menu > div.item {
 	padding: 10px 10px;
 	padding-top:15px;
-	margin-left:10px;
+	margin-right:20px;
 	display:block;
 	float:left;
 	width:160px;
 	height:120px;
-	margin-left:20px;
-	margin-top:10px;
+	margin-top:20px;
 	margin-bottom:10px;
 	background: linear-gradient(#00008020,#00008008,#00008004, #00008008, #00008020);
 	text-align:center;

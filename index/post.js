@@ -1,12 +1,15 @@
 var post_id = null;
-function post_init(id) {
+function post_init(id, parent) {
 	post_id = id;
-	document.body.innerHTML +=
+	if(parent != undefined)
+		parent = document.getElementById(parent);
+	else parent = document.body;
+	parent.innerHTML +=
 	"<hr style='margin-top:30px'>"
-	+ "<h3>質問コーナー</h3>"
-	+"<div>名前：<input id=post_name style='padding: 4px 3px;'>&nbsp;&nbsp;<button onclick='post()'>以下を質問する</button></div>"
-	+ "<div><textarea id=post_text rows=5 cols=80 style='resize:none;'></textarea></div>"
-	+ "<div id=post_log></div>";
+	+ "<h3 style='margin-bottom:10px'>質問コーナー</h3>"
+	+"<div style='font-size:14px;margin-left: 10px;margin-top: 10px;'>名前：<input id=post_name style='padding: 4px 3px;'>&nbsp;&nbsp;<button onclick='post()'>以下を質問する</button><br>"
+	+ "<textarea id=post_text rows=5 cols=80 style='resize:none;margin-top:5px;'></textarea><br>"
+	+ "<div id=post_log style='margin-top:5px;'></div></div>";
 	let v = localStorage.getItem("post_name");
 	if(v != null && v != "") {
 		document.getElementById("post_name").value = v;
