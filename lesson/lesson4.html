@@ -4,17 +4,23 @@
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 4</title>
+<title>レッスン４</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
 </style>
+<script type='text/javascript' src="../index/post.js"></script>
+<script>
+window.onload = function() {
+	post_init("lesson4");
+}
+</script>
 </head>
 <body>
-<h3>Lesson 4 「迷路」(3D)を表示してみよう</h3>
+<h3>レッスン４ 「迷路」(3D)を表示してみよう</h3>
 
 <table>
 <tr><td valign=top><img src=maze3.png width=200></td>
-<td style="padding-left:10px;" valign=top>レッスン３で作った迷路プログラムを改造して、３Ｄで迷路が表示できろようにしましょう</td></tr></table>
+<td style="padding-left:10px;" valign=top>レッスン３で作った迷路プログラムを改造して、３Ｄで迷路が表示できるようにしましょう</td></tr></table>
 
 <h4>スプライト（マップ）に３Ｄ表示させるブロックを作ります</h4>
 
@@ -45,7 +51,7 @@
 <td>「V」から始まる場合は、壁を３Ｄで表示します</td></tr>
 </table>
 
-<li>各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</li>
+<div style="margin-left:30px;margin-top:10px;">各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</div>
 
 </div>
 
@@ -58,25 +64,19 @@
 <li><span>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
 Scratchプログラムに最新の迷路の状態（maze.htmlの3D viewと同じ状態）が表示されたらOKです</span><br>
 
-<div><img src=l4_html.png width=180><img src=l4_scratch.png width=260 style="vertical-align:bottom;margin-bottom:10px;"></div></li>
+<div style="margin-top:10px;"><img src=l4_html.png width=200><img src=l4_scratch.png width=260 style="vertical-align:bottom;margin-bottom:10px;"></div></li>
 
 </div></div>
 
 <hr>
 
-<h4>迷路の表示って遅いよね、一度にパッと表示させることができます。</h4>
-
-<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。例えば「Y」から始まる場合の処理は以下のようにします。</p>
-
-<div><img src=l4_redraw.png></div>
-
-<hr>
 
 <h4>【自由研究】ゲームできるように改造してみよう</h4>
 
 <p><a href=../maze/docs.html>maze/docs.html</a> を見て、Scratchから迷路ゲームができるようにしてみよう</p>
 
 <li>↑↓←→のキー操作ができるようにしよう</li>
+<li>Mキーで２Ｄ／３Ｄの表示が変更できるようにしよう</li>
 
 </body>
 </html>

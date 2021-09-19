@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lesson 3</title>
+<title>レッスン３</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
 .x, .b {
@@ -31,9 +31,15 @@
 	border-color: white;
 }
 </style>
+<script type='text/javascript' src="../index/post.js"></script>
+<script>
+window.onload = function() {
+	post_init("lesson3");
+}
+</script>
 </head>
 <body>
-<h3>Lesson 2 「迷路」(2D)を表示してみよう</h3>
+<h3>レッスン３ 「迷路」(2D)を表示してみよう</h3>
 
 <table>
 <tr><td valign=top><img src=maze2.png></td>
@@ -70,15 +76,31 @@
 <li>迷路データ全体を表示するブロック（DRAWを受け取ったとき）、<br>
 １行分を表示するブロック(DRAWLINE)、<br>
 点を表示するブロック(DRAWPOINT)、<br>
-ペン動作のブロック(DRAWPEN)をそれぞれ作ります</br>
+ペン動作のブロック(DRAWPEN)をそれぞれ作ります</li>
 
-<div><img src=l3_draw.png></div></li>
+<table class=t>
+<tr><td><img src=l3_draw.png></td>
+<td></td></tr>
+<tr><td><img src=l3_drawa.png></td>
+<td></td></tr>
+<tr><td><img src=l3_drawb.png></td>
+<td></td></tr>
+<tr><td><img src=l3_drawc.png></td>
+<td></td></tr>
+</table>
 
 <li>現在の位置を表示するブロック（SHOWを受け取ったとき）、<br>
 現在の位置を隠すブロック（HIDEを受け取ったとき）、<br>
-指定位置を表示するブロック（POINTを受け取ったとき）も作ります</br>
+指定位置を表示するブロック（POINTを受け取ったとき）も作ります</li>
 
-<div><img src=l3_draw2.png></div></li>
+<table class=t>
+<tr><td><img src=l3_draw2.png></td>
+<td></td></tr>
+<tr><td><img src=l3_draw2a.png></td>
+<td></td></tr>
+<tr><td><img src=l3_draw2b.png></td>
+<td></td></tr>
+</table>
 
 <h4>スプライト（メイン）を作ります</h4>
 
@@ -86,9 +108,9 @@
 
 <div><img src=l3_arrow.png width=400></div></li>
 
-<li>「実行が押されたとき」に利用するバンド、グループを宣言するブロックを配置します</li>
+<li>「実行が押されたとき」に利用するバンド、グループを宣言するブロックを配置します<br>
 
-<div><img src=l3_run.png></div>
+<div><img src=l3_run.png></div></li>
 
 </div>
 
@@ -114,7 +136,7 @@
 <td>「S」から始まる場合は、迷路の大きさを変数に設定します</td></tr>
 </table>
 
-<li>各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</li>
+<div style="margin-left:30px;margin-top:10px;">各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</div>
 
 <div></div>
 
@@ -129,7 +151,7 @@
 <li><span>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
 Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ状態）が表示されたらOKです</span><br>
 
-<div><img src=l3_html.png width=300><img src=l3_scratch.png width=250 style="vertical-align:bottom;"></div></li>
+<div><img src=l3_html.png width=330><img src=l3_scratch.png width=250 style="vertical-align:bottom;"></div></li>
 
 </div></div>
 
@@ -137,9 +159,9 @@ Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ
 
 <h4>迷路の表示って遅いよね、一度にパッと表示させることができます。</h4>
 
-<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。例えば「Y」から始まる場合の処理は以下のようにします。</p>
+<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。<br>例えば「Y」から始まる場合の処理は以下のようにします。</p>
 
-<div><img src=l3_redraw.png></div>
+<div style="margin-left:20px;"><img src=l3_redraw.png></div>
 
 <hr>
 

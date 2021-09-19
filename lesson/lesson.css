@@ -1,5 +1,5 @@
 body {
-	margin:0;
+	margin-left:20px;
 	padding: 10px 10px;
 	font-size:16px;
 }
@@ -12,9 +12,8 @@ code, .code {
 }
 li {
 	margin-top: 10px;
-}
-td * {
-	vertical-align:middle;
+	text-indent: -20px;
+	padding-left: 20px;
 }
 red {
 	color:red;
@@ -25,21 +24,30 @@ li > div {
 	margin-left: 20px;
 }
 
-li {
-	text-indent: -20px;
-	padding-left: 20px;
+table {
+	margin-top: 10px;
+	border:0;
+	border-spacing:0;
 }
 
-.t {
-	margin-left:15px;
-	border:0;
-	border-spacing:0
-}
-.t td {
+td {
+	vertical-align: top;
 	padding:0;
-	vertical-align:top;
+	padding-right:10px;
+}
+td img {
+	vertical-align: top;
+}
+
+td > p {
+	margin:5px 0;
 }
 
 body > p {
 	margin-left:10px;
 }
+body > div {
+	margin-left:10px;
+	margin-top:10px;
+}
+
