@@ -7,19 +7,23 @@ function post_init(id) {
 	+"<div>名前：<input id=post_name style='padding: 4px 3px;'>&nbsp;&nbsp;<button onclick='post()'>以下を質問する</button></div>"
 	+ "<div><textarea id=post_text rows=5 cols=80 style='resize:none;'></textarea></div>"
 	+ "<div id=post_log></div>";
+	let v = localStorage.getItem("post_name");
+	if(v != null && v != "") {
+		document.getElementById("post_name").value = v;
+	}
 	post_load();
 }
 
 function post() {
 	let value =  post_id + "\t";
 	let n = document.getElementById("post_name");
-	let v = n.value.trim(); 	if(v == "") return;
-	value += v + "\t";
+	n = n.value.trim(); if(n == "") return;
+	value += n + "\t";
 	let t = document.getElementById("post_text");
-	v = t.value.trim(); if(v == "") return;
+	let v = t.value.trim(); if(v == "") return;
+	localStorage.setItem("post_name", n);
 	value += v.replace(/\n/g, "\\n");
 	post_xhr("/app/post", value, function(text) { post_log(text); });
-	n.value = "";
 	t.value = "";
 }
 function post_load() {
