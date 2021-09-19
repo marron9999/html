@@ -18,12 +18,12 @@ function post() {
 	let t = document.getElementById("post_text");
 	v = t.value.trim(); if(v == "") return;
 	value += v.replace(/\n/g, "\\n");
-	xhr("/post", value, function(text) { post_log(text); });
+	post_xhr("/app/post", value, function(text) { post_log(text); });
 	n.value = "";
 	t.value = "";
 }
 function post_load() {
-	post_xhr("/load", post_id, function(text) { post_log(text); });
+	post_xhr("/app/load", post_id, function(text) { post_log(text); });
 }
 function post_xhr(url, data, func) {
 	data = encodeURIComponent(data);
@@ -36,7 +36,7 @@ function post_xhr(url, data, func) {
 	req.send(data);
 }
 function post_log(text) {
-	document.getElementById("log").innerHTML = "";
+	document.getElementById("post_log").innerHTML = "";
 	text = text.split("\n");
 	for(let i=text.length-1; i>=0; i--) {
 		text[i] = text[i].trim();
