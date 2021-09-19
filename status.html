@@ -10,7 +10,7 @@ body {
 	padding: 10px 20px;
 }
 table {
-	border-spacing: 1px;
+	border-spacing: 4px;
 }
 table td {
 	padding-left: 0;
@@ -25,27 +25,23 @@ a {
 	cursor:pointer;
 	color: #00a;
 }
-#connect {
-	font-size:12px;
-}
-#connect th {
-	font-size:16px;
+table th {
+	border-bottom: 1px solid #ccc;
 }
 #connect table {
-	border-spacing: 0px;
+	border-spacing: 4px;
 }
 td.v {
-	width: 20px;
-	height: 30px;
+	width: 26px;
+	height: 46px;
 	overflow: hidden;
-	position: relative;
+	text-align:center;
 	padding: 0;
 }
 td.v > span {
-	position: absolute;
 	left: 0;
 	top: 0;
-	padding-top:2px;
+	padding-top:6px;
 	display: inline-block;
 	transform: rotate(-90deg);
 }
@@ -58,10 +54,10 @@ td.b {
 }
 td.b > span {
 	display: inline-block;
-	width:12px;
+	width:16px;
 	background: #8f8;
 	vertical-align:bottom;
-	margin-left:2px;
+	margin-left:6px;
 }
 </style>
 <script type='text/javascript' src="index/post.js"></script>
@@ -76,17 +72,23 @@ window.onload = function() {
 			let n = text[i].substr(0,p);
 			text[i] = text[i].substr(p+1);
 			p = text[i].indexOf("\t");
-			h += "<tr><td><a onclick='select(this)'>" + n + "</a></td>";
+			h += "<tr><td><a onclick='seltxt(this)'>" + n + "</a></td>";
 			h += "<td>" + text[i].substr(0,p) + "</a></td><td>" + text[i].substr(p+1) +"</td></tr>";
 		}
 		let e = document.getElementById("dir");
-		e.innerHTML = "<table><tr><th>File</th><th>Time</th><th>Text</th></tr>" + h + "</table>";
+		e.innerHTML = "<table><tr><th>ファイル</th><th>最終更新</th><th>最終ログ</th></tr>" + h + "</table>";
 	});
+	document.getElementById("filename").innerHTML =  "_.txt";
 	post_load("");
 }
-function select(e) {
-	e = e.innerHTML.replace(".txt","");
-	post_load(e);
+function seltxt(e) {
+	document.getElementById("filename").innerHTML =  e.innerHTML;
+	post_load(e.innerHTML.replace(".txt",""));
+
+}
+function sellog(id) {
+	document.getElementById("filename").innerHTML =  id + ".log";
+	post_get(id, function(text) { post_log(text); });
 
 }
 function connect() {
@@ -98,13 +100,12 @@ function connect() {
 	for(let i=0; i<14; i++) {
 		let id = f(d.getFullYear(), 4) + f(d.getMonth()+1, 2) + f(d.getDate(), 2);
 		h0 = "<td class=b id=" + id + "_></td> " + h0;
-		h1 = "<td class=v><span id=" + id + ">0</span></td> " + h1;
-		h2 = "<td class=v><span>" + d.getDate() + "</span></td> " + h2;
+		h1 = "<td class=v onclick='sellog(" + id + ")'><span id=" + id + ">0</span></td> " + h1;
+		h2 = "<td class=v onclick='sellog(" + id + ")'><span>" + d.getDate() + "</span></td> " + h2;
 		d.setDate(d.getDate() - 1);
 	}
 	let e = document.getElementById("connect");
-	e.innerHTML = "<table><tr><th colspan=14>Connection</th></tr>"
-			+ "<tr>" + h0 + "</tr><tr>" + h1 + "</tr><tr>" + h2 + "</tr></table>";
+	e.innerHTML = "<table><tr>" + h0 + "</tr><tr>" + h1 + "</tr><tr>" + h2 + "</tr></table>";
 	d = new Date();
 	for(let i=0; i<14; i++) {
 		let id = f(d.getFullYear(), 4) + f(d.getMonth()+1, 2) + f(d.getDate(), 2);
@@ -130,9 +131,10 @@ function connect() {
 </script>
 </head>
 <body>
-<div id=connect style='margin-top:5px;margin-bottom:10px'></div>
-<div id=dir style='margin-top:5px;margin-bottom:10px'></div>
-<hr>
-<div id=post_log style='margin-top:5px;margin-bottom:10px'></div>
+<h4  style='margin-top:5px;margin-bottom:10px;'>WebSocketセッション</h4>
+<div id=connect style='margin-top:5px;margin-bottom:10px;'></div>
+<div id=dir style='margin-top:20px;margin-bottom:10px;'></div>
+<h4 style='margin-top:20px;margin-bottom:10px;'><span id=filename></span> の内容（最新順）</h4>
+<div id=post_log style='margin-top:5px;margin-bottom:10px;'></div>
 </body>
 </html>
