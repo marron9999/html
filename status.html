@@ -63,6 +63,10 @@ td.b > span {
 <script type='text/javascript' src="index/post.js"></script>
 <script>
 window.onload = function() {
+	let host = window.location.hostname;
+	if(host.indexOf("github") >= 0) {
+		github = true;
+	}
 	connect();
 	post_dir(function(text) {
 		text = text.split("\n");
