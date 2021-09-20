@@ -1,5 +1,11 @@
+var github = false;
 var post_id = null;
 function post_init(id, parent) {
+	let host = window.location.hostname;
+	if(host.indexOf("github") >= 0) {
+		github = true;
+		return;
+	}
 	post_id = id;
 	if(parent != undefined)
 		parent = document.getElementById(parent);
@@ -18,6 +24,7 @@ function post_init(id, parent) {
 }
 
 function post() {
+	if(github) return;
 	let value =  post_id + "\t";
 	let n = document.getElementById("post_name");
 	n = n.value.trim(); if(n == "") return;
@@ -30,9 +37,11 @@ function post() {
 	t.value = "";
 }
 function post_load(id) {
+	if(github) return;
 	post_xhr("/app/load", id, function(text) { post_log(text); });
 }
 function post_xhr(url, data, func) {
+	if(github) return;
 	data = encodeURIComponent(data);
 	const req = new XMLHttpRequest();
 	req.onload = function() {
@@ -43,6 +52,7 @@ function post_xhr(url, data, func) {
 	req.send(data);
 }
 function post_log(text) {
+	if(github) return;
 	document.getElementById("post_log").innerHTML = "";
 	text = text.split("\n");
 	for(let i=text.length-1; i>=0; i--) {
@@ -80,6 +90,7 @@ function post_log(text) {
 	}
 }
 function post_dir(func) {
+	if(github) return;
 	const req = new XMLHttpRequest();
 	req.onload = function() {
 		func(decodeURIComponent(req.responseText));
@@ -89,5 +100,6 @@ function post_dir(func) {
 	req.send("");
 }
 function post_get(id, func) {
+	if(github) return;
 	post_xhr("/app/log", id, func);
 }
