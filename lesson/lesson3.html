@@ -7,12 +7,13 @@
 <title>レッスン３</title>
 <link type="text/css" href="lesson.css" rel="stylesheet">
 <style>
-.x, .b {
+.x, .b, .z {
 	height:13px;
 	font-size:9px;
 }
 .x > div,
-.b > div {
+.b > div,
+.z > div {
 	padding:0;
 	border:1px solid gray;
 	width:12px;
@@ -30,6 +31,18 @@
 .x > div {
 	border-color: white;
 }
+.z > div {
+	border:1px solid black;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	background: black;
+}
+.z > div.w {
+	border:1px solid white;
+	background: white;
+}
+
+
 </style>
 <script type='text/javascript' src="../index/post.js"></script>
 <script>
@@ -67,9 +80,9 @@ window.onload = function() {
 ゴール位置の変数 GX、GY、<br>
 現在位置の変数 CX、CY、CZ も作ります</li>
 
-<li>それから迷路データを入れるリスト MAP を作ります<br>
+<li>それから迷路データを入れるリスト MAP を作ります</li>
 
-<div><img src=l3_map.png width=250></div></li>
+<div><img src=l3_map.png width=250></div>
 
 <li>マップのスプライトのみで使う変数 _X、_Y、_Z、_C を作ります</li>
 
@@ -80,13 +93,19 @@ window.onload = function() {
 
 <table class=t>
 <tr><td><img src=l3_draw.png></td>
-<td></td></tr>
+<td><p>まず全体を消します</p>
+<p>リスト MAP のデータを使って、１行ずつ表示します（DRAWLINEを動かす）</p>
+</td></tr>
 <tr><td><img src=l3_drawa.png></td>
-<td></td></tr>
+<td><p>１行のデータ（例：199999999999999999201）から，種別を１つずつ取り出し点を表示します（DRAWPOINTを動かす）</p></td></tr>
 <tr><td><img src=l3_drawb.png></td>
-<td></td></tr>
+<td><p>種別から点の色を決め、ペンで表示します（DRAWPENを動かす）</p></td></tr>
 <tr><td><img src=l3_drawc.png></td>
-<td></td></tr>
+<td><p>ペンで点を表示します</p>
+<p>ペンの座標は以下のように計算します</p>
+<p>横座標：(_X * 11) - 180<br>
+縦座標：140 - (_Y * 11)</p>
+</td></td></tr>
 </table>
 
 <li>現在の位置を表示するブロック（SHOWを受け取ったとき）、<br>
@@ -95,22 +114,22 @@ window.onload = function() {
 
 <table class=t>
 <tr><td><img src=l3_draw2.png></td>
-<td></td></tr>
+<td><p>青色の点を表示します</p></td></tr>
 <tr><td><img src=l3_draw2a.png></td>
-<td></td></tr>
+<td><p>白色の点を表示します</p></td></tr>
 <tr><td><img src=l3_draw2b.png></td>
-<td></td></tr>
+<td><p>リスト MAP の X、Y の種別を取り出し点を表示します</p></td></tr>
 </table>
 
 <h4>スプライト（メイン）を作ります</h4>
 
-<li>上向き矢印のイメージをコスチュームとして設定します<br>
+<li>上向き矢印のイメージをコスチュームとして設定します</li>
 
-<div><img src=l3_arrow.png width=400></div></li>
+<div><img src=l3_arrow.png width=400></div>
 
-<li>「実行が押されたとき」に利用するバンド、グループを宣言するブロックを配置します<br>
+<li>「実行が押されたとき」に利用するバンド、グループを宣言するブロックを配置します</li>
 
-<div><img src=l3_run.png></div></li>
+<div><img src=l3_run.png></div>
 
 </div>
 
@@ -121,19 +140,27 @@ window.onload = function() {
 <table class=t>
 <tr><td><img src=l3_loop.png></td>
 <td></td></tr>
-<tr><td><img src=l3_loop1.png></td>
-<td>「M」から始まる場合は、迷路データを設定します</td></tr>
-<tr><td><img src=l3_loop2.png></td>
-<td>「T」から始まる場合は、指定位置から指定方向のデータを設定します</td></tr>
+<tr class=bt><td><img src=l3_loop1.png></td>
+<td><p>「M」から始まる場合は、_V にはマップ情報（例：M 0 111111111111111111111）が入っています</p>
+<p>縦座標（例：0）に対応するリスト MAP の位置に横種別（例：111111111111111111111）を入れます</p>
+</td></tr>
+<tr class=bt><td><img src=l3_loop2.png></td>
+<td><p>「T」から始まる場合は、_Vには視界情報（例：T 18 19 0 1101110121）が入っています</p>
+<p>横座標（例：18）、縦座標（例：19）に対応するリスト MAP の位置に種別（例：1101110121）を１つずつ設定し、設定した座標の点を表示します（POINTを送ります）</p>
+</td></tr>
 <tr><td colspan=2><img src=l3_loop21.png></td></tr>
 <tr><td><img src=l3_loop22.png></td>
-<tr><td></td></tr>
-<tr><td><img src=l3_loop3.png></td>
-<td>「Y」から始まる場合は、現在位置を変数に設定し、迷路を表示します</td></tr>
-<tr><td><img src=l3_loop4.png></td>
-<td>「G」から始まる場合は、ゴール位置を変数に設定します</td></tr>
-<tr><td><img src=l3_loop5.png></td>
-<td>「S」から始まる場合は、迷路の大きさを変数に設定します</td></tr>
+<td><p>方向に応じて横座標か縦座標を変えながら設定します</p></td></tr>
+<tr class=bt><td><img src=l3_loop3.png></td>
+<td>「Y」から始まる場合は、_Vには現在位置（例：Y 19 19 0）が入っています<p>
+<p>現在位置を変数に設定し、コスチュームを変え（ALLOWを動かす）、迷路全体を表示し（DRAWを送る）、現在位置を表示します（SHOWを送る）</p>
+</td></tr>
+<tr class=bt><td><img src=l3_loop4.png></td>
+<td><p>「G」から始まる場合は、_Vにはゴールの位置（例：G 1 3）が入っています</p>
+<p>ゴール位置を変数に設定します</p></td></tr>
+<tr class=bt><td><img src=l3_loop5.png></td>
+<td><p>「S」から始まる場合は、_Vには迷路の大きさ（例：S 21 21）が入っています</p>
+<p>迷路の大きさを変数に設定し、リスト MAP に迷路の縦の大きさ分の仮データを入れておきます</p></td></tr>
 </table>
 
 <div style="margin-left:30px;margin-top:10px;">各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</div>
@@ -157,9 +184,9 @@ Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ
 
 <hr>
 
-<h4>迷路の表示って遅いよね、一度にパッと表示させることができます。</h4>
+<h4>迷路の表示って遅いよね、一度にパッと表示させることができます</h4>
 
-<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう。<br>例えば「Y」から始まる場合の処理は以下のようにします。</p>
+<p>「Y」から始まる場合の処理、「T」から始まる場合の処理の中に「再描画モード」を入れてみましょう<br>例えば「Y」から始まる場合の処理は以下のようにします。</p>
 
 <div style="margin-left:20px;"><img src=l3_redraw.png></div>
 
@@ -170,6 +197,41 @@ Scratchプログラムに最新の迷路の状態（maze.htmlの2D viewと同じ
 <p><a href=../maze/docs.html>maze/docs.html</a> を見て、Scratchから迷路ゲームができるようにしてみよう</p>
 
 <li>↑↓←→のキー操作ができるようにしよう</li>
+<li>ゴールの位置、現在の位置を表示しましよう</li>
+<li>表示されている●を■で表示しましよう<br>
+ヒント：太さ10のペンで点をうつこと●になっています<br>
+　　　　太さ1で長さ10の線を10回繰り返して並べれば？</li>
+
+<div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+
+<li>現在位置に表示されている●を緑色にしましよう<br>
+そして、表示を●から▲に変え、向いている方向に回転させてみよう</li>
+ヒント：太さ1で長さ1の線から始めて2ずつ長くしたり短くして9回繰り返して並べれば？</li>
+
+<div>
+<div class=z><div class=w></div><div class=w></div><div class=w></div><div class=w></div><div></div></div>
+<div class=z><div class=w></div><div class=w></div><div class=w></div><div class=w></div><div></div></div>
+<div class=z><div class=w></div><div class=w></div><div class=w></div><div></div><div></div><div></div></div>
+<div class=z><div class=w></div><div class=w></div><div class=w></div><div></div><div></div><div></div></div>
+<div class=z><div class=w></div><div class=w></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div class=w></div><div class=w></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div class=w></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div class=w></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class=z><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+
+<li>他の人がいたら青い▲で表示し、向いている方向に回転させてみよう</li>
 
 </body>
 </html>

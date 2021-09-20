@@ -94,20 +94,22 @@ window.onload = function() {
 
 <li>クローンされたとき _X、_Y、_Zの値を設定します</li>
 
-<li><span>メッセージ INIT を受信したとき</li>
+<li><span>メッセージ INIT を受け取ったとき</li>
 
 <table class=t>
 <tr><td><img src=l2_init.png /></td>
 <td></td></tr>
-<tr><td><img src=l2_init1.png></td>
+<tr class=bt><td><img src=l2_init1.png></td>
 <td><p>_X、_Y の値を決定します</p></td></tr>
-<tr><td><img src=l2_init2.png></td>
+<tr class=bt><td><img src=l2_init2.png></td>
 <td><p>_X、_Yの値に応じて表示位置を決めます</p>
 <p>横位置 = _X * 21 + 10<br>
 縦位置 = -10 - _Y * 21</p></td></tr>
 </table>
 
-<li>メッセージ SET を受信したとき、かつ、X、Y に一致する場合、スプライトの表示を変えます</li>
+<li>メッセージ SET を受け取ったとき、かつ<br>
+X、Y が同じ、かつ<br>
+Zが違う場合、コスチュームを変えます</li>
 
 <table>
 <tr><td><img src=l2_set.png></td>
@@ -116,12 +118,9 @@ window.onload = function() {
 
 <h3>スプライト（メイン）を作ります</h3>
 
-<li>「実行が押されたとき」に</li>
-
-<div>
-
-<li>利用するバンド、グループを宣言するブロックを配置します</li>
-<li>スプライト（コマ）のクローンとメッセージ INIT の組みを64回繰り返します</li>
+<li>「実行が押されたとき」に<br>
+利用するバンド、グループを宣言するブロックを配置します<br>
+そして、スプライト（コマ）のクローンとメッセージ INIT の組みを64回繰り返します</li>
 
 <table>
 <tr><td><img src=l2_run.png></td>
@@ -129,26 +128,22 @@ window.onload = function() {
 </table>
 </div>
 
-<li>「ずっと」の前に"start"を送信し、「ずっと」の中に受信した文字列を処理するブロックを配置します</li>
-
-<div>
-
 <li>メインのスプライトのみで使う変数 _V1、_V2を作ります</li>
+<li>「ずっと」の前に"start"を送信し、<br>
+「ずっと」の中に受信した文字列を処理するブロックを配置します</li>
 
 <table><tr>
 <td><img src=l2_loop.png></td>
 <td></td>
-</tr><tr>
+</tr><tr class=bt>
 <td><img src=l2_loop1.png></td>
 <td><p>「board」から始まる場合は、それぞれの位置のスプライトを変更します</p></td>
-</tr><tr>
+</tr><tr class=bt>
 <td><img src=l2_loop2.png></td>
 <td><p>「stone」から始まる場合は、指定された位置のスプライトを変更します</p></td>
 </tr></table>
 
 <p>「board」「stone」の意味は <a href=../othello/docs.html>othello/docs.html</a> を見てください</p>
-
-</div>
 
 <li>他人からの通信を確認してみよう</li>
 

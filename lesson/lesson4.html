@@ -24,31 +24,56 @@ window.onload = function() {
 
 <h4>スプライト（マップ）に３Ｄ表示させるブロックを作ります</h4>
 
+<li>点を表示するブロック(DRAWPOINT)から色を決める部分を別のブロック（DRAWCOLOR）にします</li>
+
+<div><img src=l4_color.png></div>
+
 <li>３Ｄ表示する／しないを判定する変数 3D を作ります</li>
 
-<li>迷路データ全体を消するブロック（CLEARを受け取ったとき）、<br>
-１つの壁を表示するブロック(VIEWを受け取ったとき)、それぞれ作ります</br>
+<li>マップのスプライトのみで使う変数 _I を作ります</li>
 
-<div><img src=l4_clear.png></div><br>
-<div><img src=l4_frame.png></div></li>
+<li>迷路データ全体を消するブロック（CLEARを受け取ったとき）、<br>
+１つの壁を表示するブロック(VIEWを受け取ったとき)、それぞれ作ります</li>
+
+<div><img src=l4_clear.png></div>
+
+<table>
+<tr><td><img src=l4_frame.png></td>
+<td></td></tr>
+<tr class=bt><td><img src=l4_frame1.png></td>
+<td><p>Z には3D描画情報（例：V 1 14 7 0 0 0 140 14 133）が入っています</p>
+<p>２番目の数字（例：1）で壁の色を決めます<p></td></tr>
+<tr class=bt><td><img src=l4_frame2.png></td>
+<td><p>壁の４点（例：14 7 0 0 0 140 14 133）にペンを移動します</p>
+<p>ペンの座標は以下のように計算します</p>
+<p>横座標：_X - 200<br>
+縦座標：(_Y + _Y) - 120</p>
+</td></tr>
+<tr class=bt><td><img src=l4_frame3.png></td>
+<td><p>最初の点（例：14 7）にペンを移動します</p></td></tr>
+</table>
 
 <h4>スプライト（メイン）を作ります</h4>
 
-<li>「実行が押されたとき」に変数 3D を「３Ｄ表示しない：0」にします<br>
+<li>「実行が押されたとき」に変数 3D を「３Ｄ表示しない：0」にします</li>
 
-<div><img src=l4_2d.png></div></li>
+<div><img src=l4_2d.png></div>
 
-<li>２Ｄ／３Ｄを切り替えるブロックを配置します<br>
+<li>２Ｄ／３Ｄを切り替えるブロックを配置します</li>
 
-<div><img src=l4_3d.png></div></li>
+<div><img src=l4_3d.png></div>
 
 <li>「ずっと」の最後に壁データを処理するブロックを配置します</li>
 
-<table class=t>
+<table>
 <tr><td><img src=l4_loop5.png></td>
 <td></td></tr>
-<tr><td><img src=l4_view.png></td>
-<td>「V」から始まる場合は、壁を３Ｄで表示します</td></tr>
+<tr class=bt><td><img src=l4_view.png></td>
+<td><p>「V」から始まる場合は、壁を３Ｄで表示します</p>
+<p>「V B」の場合は、全体を消すために CLEAR を送り、再描画をしない(0)にします</p>
+<p>「V E」の場合は、再描画をする(0)にします</p>
+<p>「V 数字」の場合は、壁を描くために VIEW を送ります</p>
+</td></tr>
 </table>
 
 <div style="margin-left:30px;margin-top:10px;">各値の意味は <a href=../maze/docs.html>maze/docs.html</a> を見てください</div>
@@ -59,23 +84,24 @@ window.onload = function() {
 
 <div style="margin-left:20px;margin-top:10px;">
 
-<li>Scratchプログラムを実行した状態で、<a href=/maze.html target=docs>maze.html</a> を開きます</li>
+<li>Scratchプログラムを実行した状態で、<a href="../maze.html" target=docs>maze.html</a> を開きます</li>
 
-<li><span>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
-Scratchプログラムに最新の迷路の状態（maze.htmlの3D viewと同じ状態）が表示されたらOKです</span><br>
+<li>maze.html上で↑で前進、↓で後退、←で左を向く、→で右を向く操作を行います<br>
+Scratchプログラムに最新の迷路の表示な同じが表示（3D viewと近い色、形）となればOKです</li>
 
-<div style="margin-top:10px;"><img src=l4_html.png width=200><img src=l4_scratch.png width=260 style="vertical-align:bottom;margin-bottom:10px;"></div></li>
+<div style="margin-top:10px;"><img src=l4_html.png width=200>
+<img src=l4_scratch.png width=260 style="vertical-align:bottom;margin-bottom:10px;"></div>
 
 </div></div>
 
 <hr>
-
 
 <h4>【自由研究】ゲームできるように改造してみよう</h4>
 
 <p><a href=../maze/docs.html>maze/docs.html</a> を見て、Scratchから迷路ゲームができるようにしてみよう</p>
 
 <li>↑↓←→のキー操作ができるようにしよう</li>
+<li>壁を線の色で塗りつぶしてみよう</li>
 <li>Mキーで２Ｄ／３Ｄの表示が変更できるようにしよう</li>
 
 </body>
