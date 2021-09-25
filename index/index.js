@@ -15,6 +15,9 @@ function select(e) {
 		}
 	}
 }
+function cache() {
+	window.open("cache.html", "cache");
+}
 function cdmm() {
 	window.open("https://coderdojo-mn.com/", "coderdojo");
 }

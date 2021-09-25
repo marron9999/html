@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script type="text/javascript" src="index/cache-db.js"></script>
+<title>作ったプログラム</title>
+<style>
+body {
+	padding: 10px 10px;
+}
+#a > div {
+	display: inline-block;
+	margin:10px 10px;
+	text-align:left;
+	font-weight: bold;
+	min-width:200px;
+	min-height:100px;
+	cursor:pointer;
+}
+#a > div img {
+	border: 1px solid gray;
+}
+</style>
+<script>
+window.onload = function() {
+	let infos = db.infos("scratch", "projects", false);
+	let e = document.getElementById("a");
+	if(infos == null || infos.length <= 0) {
+		e.innerHTML = "まだプロルラムは作られていません";
+		return;
+	}	
+	e.innerHTML = "";
+	db.open("scratch", function() {
+		for(let i=0; i<infos.length; i++) {
+			let h = "<div onclick='select(" + infos[i].cacheId + ")'>"
+				+ "<div id=" + i + "></div>"
+				+ "<div>" + infos[i].filename + "</div>"
+				+ "<div><small>" + infos[i].date + " " + infos[i].time + "</div>"
+				+ "</div>";
+			e.innerHTML += h;
+			db.get(infos[i].cacheId + "i", async function(data) {
+				let e = document.getElementById(""+ i);
+				e.innerHTML += "<img src='" + data.image + "'"
+					+ " width=" + data.size[0]
+					+ " height=" + data.size[1]
+					+ ">";
+			});
+		}
+		db.close();
+	});
+};
+function select(id) {
+	window.open("/scratch?cache=" + id, "scratch");
+}
+</script>
+</head>
+<body>
+<h3>あなたが作ったプログラム</h3>
+<div id=a></div>
+<div style="margin-top:20px;"></div>
+<hr>
+<p>プログラムはブラウザが管理しているストレージに保存されています<br>
+サーバーには保存されていません</p>
+</body>
+</html>
