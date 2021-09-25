@@ -10,6 +10,9 @@
 body {
 	padding: 10px 10px;
 }
+h3 {
+	margin-top:0;
+}
 #a > div {
 	display: inline-block;
 	margin:10px 10px;
@@ -34,10 +37,11 @@ window.onload = function() {
 	e.innerHTML = "";
 	db.open("scratch", function() {
 		for(let i=0; i<infos.length; i++) {
+			let t = infos[i].time.substr(0, infos[i].time.indexOf("."));	
 			let h = "<div onclick='select(" + infos[i].cacheId + ")'>"
 				+ "<div id=" + i + "></div>"
 				+ "<div>" + infos[i].filename + "</div>"
-				+ "<div><small>" + infos[i].date + " " + infos[i].time + "</div>"
+				+ "<div><small>" + infos[i].date + " " + t + "</div>"
 				+ "</div>";
 			e.innerHTML += h;
 			db.get(infos[i].cacheId + "i", async function(data) {
@@ -61,7 +65,7 @@ function select(id) {
 <div id=a></div>
 <div style="margin-top:20px;"></div>
 <hr>
-<p>プログラムはブラウザが管理しているストレージに保存されています<br>
+<p style="font-size:14px">プログラムはブラウザが管理しているストレージに保存されています<br>
 サーバーには保存されていません</p>
 </body>
 </html>
