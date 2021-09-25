@@ -3,13 +3,12 @@ body {
 	margin:0;
 }
 #back {
-	background-image:url(network_people_connection.png);
+	background-image:url(network_people_connection2.png);
 	background-position: bottom right;
 	background-repeat: no-repeat;
-	background-size: 70%;
 	background-color:rgba(255,255,255,0.5);
 	background-blend-mode:lighten;
-	height: calc(100% - 10px);
+	height: calc(100% - 30px);
 	width: calc(100% - 20px);
 	position:fixed;
 }
