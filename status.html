@@ -69,7 +69,13 @@ window.onload = function() {
 	if(host.indexOf("github") >= 0) {
 		github = true;
 	}
-	cmd("free --mega");
+	let cs = ["ps -A u", "free --mega", "df -h"];
+	let h = "";
+	for(let i=0; i<cs.length; i++) {
+		h += "<button onclick='select(this)'>" + cs[i] + "</button> ";
+	}
+	document.getElementById("cmds").innerHTML = h;
+	cmd(cmds[0]);
 }
 function select(e) {
 	cmd(e.innerHTML);
@@ -93,10 +99,7 @@ function output(json) {
 </head>
 <body>
 <h4  style='margin-top:5px;margin-bottom:10px;'>サーバー状況</h4>
-<div>
-<button onclick="select(this)">free --mega</button>
-<button onclick="select(this)">df -h</button>
-</div>
+<div id=cmds></div>
 <div id=command style='margin-top:10px;'></div>
 <pre><code id=stdout style='margin-top:5px;'></code></pre>
 <pre><code id=stderr style='margin-top:5px;'></code></pre>
