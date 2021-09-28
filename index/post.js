@@ -12,8 +12,8 @@ function post_init(id, parent) {
 	else parent = document.body;
 	parent.innerHTML +=
 	"<hr style='margin-top:30px'>"
-	+ "<h3 style='margin-bottom:10px'>質問コーナー</h3>"
-	+"<div style='font-size:14px;margin-left: 10px;margin-top: 10px;'>名前：<input id=post_name style='padding: 4px 3px;'>&nbsp;&nbsp;<button onclick='post()'>以下を質問する</button><br>"
+	+ "<h3 style='margin-bottom:10px'><span class=white>質問コーナー</span></h3>"
+	+"<div style='font-size:14px;margin-left: 10px;margin-top: 10px;'><span class=white>名前：</span><input id=post_name style='padding: 4px 3px;'>&nbsp;&nbsp;<button onclick='post()'>以下を質問する</button><br>"
 	+ "<textarea id=post_text rows=5 cols=80 style='resize:none;margin-top:5px;'></textarea><br>"
 	+ "<div id=post_log style='margin-top:5px;margin-bottom:10px'></div></div>";
 	let v = localStorage.getItem("post_name");
