@@ -69,7 +69,7 @@ window.onload = function() {
 	if(host.indexOf("github") >= 0) {
 		github = true;
 	}
-	cmd("free");
+	cmd("free --mega");
 }
 function select(e) {
 	cmd(e.innerHTML);
@@ -94,7 +94,7 @@ function output(json) {
 <body>
 <h4  style='margin-top:5px;margin-bottom:10px;'>サーバー状況</h4>
 <div>
-<button onclick="select(this)">free</button>
+<button onclick="select(this)">free --mega</button>
 <button onclick="select(this)">df -h</button>
 </div>
 <div id=command style='margin-top:10px;'></div>
