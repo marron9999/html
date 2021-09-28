@@ -103,3 +103,14 @@ function post_get(id, func) {
 	if(github) return;
 	post_xhr("/app/log", id, func);
 }
+function post_cmd(cmd, func) {
+	if(github) return;
+	cmd = encodeURIComponent(cmd);
+	const req = new XMLHttpRequest();
+	req.onload = function() {
+		func(decodeURIComponent(req.responseText));
+	}
+	req.open("post", "/app/cmd");
+	req.setRequestHeader( 'Content-Type', 'text/html' );
+	req.send(cmd);
+}
