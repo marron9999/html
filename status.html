@@ -75,7 +75,7 @@ window.onload = function() {
 		h += "<button onclick='select(this)'>" + cs[i] + "</button> ";
 	}
 	document.getElementById("cmds").innerHTML = h;
-	cmd(cmds[0]);
+	cmd(cs[0]);
 }
 function select(e) {
 	cmd(e.innerHTML);
@@ -89,6 +89,10 @@ function cmd(e) {
 function output(json) {
 	let out = JSON.parse(json);
 	if(out.stdout != undefined) {
+		out.stdout = out.stdout.replace(/&/g, "&amp;");
+		out.stderr = out.stderr.replace(/&/g, "&amp;");
+		out.stdout = out.stdout.replace(/</g, "&lt;");
+		out.stderr = out.stderr.replace(/</g, "&lt;");
 		document.getElementById("stdout").innerHTML = out.stdout;
 		document.getElementById("stderr").innerHTML = out.stderr;
 	} else {
