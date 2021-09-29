@@ -4,6 +4,7 @@ function select(e) {
 		scratch:"scratch/",
 		radio:"radio.html",
 		othello:"othello.html",
+		maze9bot:"maze9bot.html",
 		maze9:"maze9.html",
 		maze:"maze.html",
 		startrek:"startrek.html",
