@@ -10,8 +10,8 @@ let size = [-1, -1];
 let goal = [-1, -1];
 let view = [-1, -1, -1];
 let see = {"0": "▲", "3":"▶", "6":"▼", "9":"◀"};
-let xy = null;
-let _z = null;
+let cxy = null;
+let cz = null;
 let min = -1;
 
 function clear() {
@@ -324,10 +324,10 @@ function message(msg) {
 			e = document.getElementById(xy);
 			e.className = "b0";
 		}
-		xy = view[0] + "-" + view[1];
-		_z = "c" + view[2];
-		e = document.getElementById(xy);
-		e.className = _z;
+		cxy = view[0] + "-" + view[1];
+		cz = "c" + view[2];
+		e = document.getElementById(cxy);
+		e.className = cz;
 		return;
 	}
 	if(v[0] == "T") {
@@ -345,9 +345,9 @@ function message(msg) {
 			v[4] = v[4].substr(1);
 		}
 		info();
-		if(xy != null) {
-			e = document.getElementById(xy);
-			e.className = _z;
+		if(cxy != null) {
+			e = document.getElementById(cxy);
+			e.className = cz;
 		}
 		return;
 	}
@@ -367,8 +367,8 @@ function message(msg) {
 			x++;
 			v[2] = v[2].substr(1);
 		}
-		//e = document.getElementById(xy);
-		//e.className = _z;
+		//e = document.getElementById(cxy);
+		//e.className = cz;
 		return;
 	}
 	if(v[0] == "V") {

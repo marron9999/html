@@ -12,15 +12,19 @@ let size = [-1, -1];
 let goal = [-1, -1];
 let view = [-1, -1, -1];
 let see = {"0": "▲", "3":"▶", "6":"▼", "9":"◀"};
-let xy = null;
-let _z = null;
+let cxy = null;
+let cz = null;
 let min = -1;
 let data = [];
+let area = [];
+
+let view3d = true;
 
 function clear() {
 	ctx1.clearRect(0, 0, cvs1.width, cvs1.height);
 }
-function draw(c, p) {
+function frame3d(c, p) {
+	if(!view3d) return;
 	ctx1.lineWidth = 1;	
 	ctx1.beginPath();
 	ctx1.moveTo(10+p[0][0],5+p[0][1]);
@@ -37,14 +41,14 @@ function draw(c, p) {
 	ctx1.strokeStyle = 'black';	
 	ctx1.stroke();
 }
-function draw2d() {
+function area2d() {
 	let w = cvs2.width, h = cvs2.height;
 	let ix=0; iy=0;
 	let c = 0;
 	for(let y=1; y<size[1]; y+=8) {
 		ix=0;
 		for(let x=1; x<size[0]; x+=8) {
-			let c3 = 0, c2 = 0, c9 = 0;
+			let c3 = 0, c2 = 0, c9 = 0, c1 = 0;
 			for(let cy=0; cy<8; cy+=2) {
 				for(let cx=0; cx<8; cx+=2) {
 					let cc = '1';
@@ -52,31 +56,35 @@ function draw2d() {
 					if(cc == '2') c2++;
 					else if(cc == '3') c3++;
 					else if(cc == '9') c9++;
+					else if(cc == '1') c1++;
 				}
 			}
 			if(c2 > 0) c = 1;
 			else if(c3 > 0) c = 2;
-			else if(c9 == 16) c = 0;
-			else c = 256 - (16 - c9) * 4;
-			ctx2.lineWidth = 1;
-			ctx2.beginPath();
-			ctx2.moveTo(ix, iy);
-			ctx2.lineTo(ix+1, iy);
-			ctx2.closePath();
-			if(c < 256) {
-				if(c == 0) {
-					ctx2.strokeStyle = 'rgb(160, 160, 160)';
-				} else if(c == 1) {
-					ctx2.strokeStyle = 'rgb(255,255,0)';
-				} else if(c == 2) {
-					ctx2.strokeStyle = 'rgb(255,0,0)';
+			else if(c1 == 16) c = 0;
+			else c = 256 - (c9 + c1) * 4;
+			if(area[iy][ix] != c) {
+				area[iy][ix] = c;
+				ctx2.lineWidth = 1;
+				ctx2.beginPath();
+				ctx2.moveTo(ix, iy);
+				ctx2.lineTo(ix+1, iy);
+				ctx2.closePath();
+				if(c < 256) {
+					if(c == 0) {
+						ctx2.strokeStyle = 'rgb(80, 80, 80)';
+					} else if(c == 1) {
+						ctx2.strokeStyle = 'rgb(255,255,0)';
+					} else if(c == 2) {
+						ctx2.strokeStyle = 'rgb(255,0,0)';
+					} else {
+						ctx2.strokeStyle = 'rgb('+c+','+c+','+c+')';
+					}
 				} else {
-					ctx2.strokeStyle = 'rgb('+c+','+c+','+c+')';
+					ctx2.strokeStyle = 'rgb(255,255,255)';
 				}
-			} else {
-				ctx2.strokeStyle = 'rgb(255,255,255)';
+				ctx2.stroke();
 			}
-			ctx2.stroke();
 			ix++;
 		}
 		iy++;
@@ -114,27 +122,107 @@ function send() {
 	}
 	ws.send("S:" + "v " + view[0] + " " + view[1] + " " + view[2]);
 }
+
 function check(x, y) {
 	x += view[0];
 	y += view[1];
-	let e = document.getElementById(x + "-" + y);
-	if(e.className.indexOf('b0') >= 0) return true;
-	if(e.className.indexOf('b2') >= 0) return true;
-	if(e.className.indexOf('b3') >= 0) return true;
-	if(e.className.indexOf('z0') >= 0) return true;
-	if(e.className.indexOf('z2') >= 0) return true;
-	if(e.className.indexOf('z3') >= 0) return true;
+	let e = data[y][x];
+	if(e == 0) return true;
+	if(e == 2) return true;
+	if(e == 3) return true;
+	if(e == 9) {
+		console.log("9 " + x + ", " + y);
+		return false;
+	}
 	return false;
 }
 function door(x, y) {
 	x += view[0];
 	y += view[1];
-	let e = document.getElementById(x + "-" + y);
-	if(e.className.indexOf('b2') >= 0) return true;
-	if(e.className.indexOf('z2') >= 0) return true;
+	e = data[y][x];
+	if(e == 2) return true;
+	if(e == 9)
+		return false;
 	return false;
 }
-function keydown(event){
+function _for0() {
+	let rc = 0;
+	if(check(0, -1)) {
+		if(door(0, -1)) {
+			view[1]--;
+			console.log("o " + view[0] + ", " + view[1]);
+			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			let e = document.getElementById(view[0] + "-" + view[1]);
+			e.className = "b0";
+			rc++;
+		}	
+		view[1]--;
+		send();
+		rc++;
+	}
+	return rc;
+}
+function _for6() {
+	let rc = 0;
+	if(check(0, 1)) {
+		if(door(0, 1)) {
+			view[1]++;
+			console.log("o " + view[0] + ", " + view[1]);
+			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			let e = document.getElementById(view[0] + "-" + view[1]);
+			e.className = "b0";
+			rc++;
+		}
+		view[1]++;
+		send();
+		rc++;
+	}
+	return rc;
+}
+function _for3() {
+	let rc = 0;
+	if(check(1, 0)) {
+		if(door(1, 0)) {
+			view[0]++;
+			console.log("o " + view[0] + ", " + view[1]);
+			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			let e = document.getElementById(view[0] + "-" + view[1]);
+			e.className = "b0";
+			rc++;
+		}
+		view[0]++;
+		send();
+		rc++;
+	}
+	return rc;
+}
+function _for9() {
+	let rc = 0;
+	if(check(-1, 0)) {
+		if(door(-1, 0)) {
+			view[0]--;
+			console.log("o " + view[0] + ", " + view[1]);
+			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			let e = document.getElementById(view[0] + "-" + view[1]);
+			e.className = "b0";
+			rc++;
+		}
+		view[0]--;
+		send();
+		rc++;
+	}
+	return rc;
+}
+function _right() {
+	view[2] = (view[2] + 3) % 12;
+	send();
+}
+function _left() {
+	view[2] = (view[2] + 12 - 3) % 12;
+	send();
+}
+
+function keydown(event) {
 	help += event.key;
 	if(help == "h"
 	|| help == "he"
@@ -143,124 +231,25 @@ function keydown(event){
 	else help = "";
 	var code = event.keyCode;
 	if (code == 39) { // 右
-		view[2] = (view[2] + 3) % 12;
-		send();
+		_right();
 		return;
 	}
 	if (code == 37) { // 左
-		view[2] = (view[2] + 12 - 3) % 12;
-		send();
+		_left();
 		return;
 	}
 	if (code == 38) { // 上
-		if(view[2] == 0) {
-			if(check(0, -1)) {
-				if(door(0, -1)) {
-					view[1]--;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}	
-				view[1]--;
-				send();
-			}
-			return;
-		}
-		if(view[2] == 6) {
-			if(check(0, 1)) {
-				if(door(0, 1)) {
-					view[1]++;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[1]++;
-				send();
-				return;
-			}
-		}
-		if(view[2] == 3) {
-			if(check(1, 0)) {
-				if(door(1, 0)) {
-					view[0]++;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[0]++;
-				send();
-			}
-			return;
-		}
-		if(view[2] == 9) {
-			if(check(-1, 0)) {
-				if(door(-1, 0)) {
-					view[0]--;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[0]--;
-				send();
-			}
-			return;
-		}
+		if(view[2] == 0) { _for0(); return; }
+		if(view[2] == 6) { _for6(); return; }
+		if(view[2] == 3) { _for3(); return; }
+		if(view[2] == 9) { _for9(); return; }
 		return;
 	}
 	if (code == 40) { // 下
-		if(view[2] == 6) {
-			if(check(0, -1)) {
-				if(door(0, -1)) {
-					view[1]--;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}	
-				view[1]--;
-				send();
-			}
-			return;
-		}
-		if(view[2] == 0) {
-			if(check(0, 1)) {
-				if(door(0, 1)) {
-					view[1]++;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[1]++;
-				send();
-				return;
-			}
-		}
-		if(view[2] == 9) {
-			if(check(1, 0)) {
-				if(door(1, 0)) {
-					view[0]++;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[0]++;
-				send();
-			}
-			return;
-		}
-		if(view[2] == 6) {
-			if(check(-1, 0)) {
-				if(door(-1, 0)) {
-					view[0]--;
-					ws.send("S:" + "o " + view[0] + " " + view[1]);
-					let e = document.getElementById(view[0] + "-" + view[1]);
-					e.className = "b0";
-				}
-				view[0]--;
-				send();
-			}
-			return;
-		}
-		return;
+		if(view[2] == 6) { _for0(); return; }
+		if(view[2] == 0) { _for6(); return; }
+		if(view[2] == 9) { _for3(); return; }
+		if(view[2] == 3) { _for9(); return; }
 	}
 	if(help == "help") {
 		help = "";
@@ -272,7 +261,7 @@ var band = 9999;
 var group = 0;
 var addr = "";
 
-window.onload = function() {
+function maze9() {
 	let url = wspath();
 	cvs1 = document.getElementById('maze');
 	ctx1 = cvs1.getContext('2d');
@@ -299,6 +288,8 @@ window.onload = function() {
 	ws.onmessage = message;
 };
 
+window.onload = maze9;
+
 function message(msg) {
 	msg = msg.data;
 	if(msg.indexOf("title") == 0) {
@@ -319,6 +310,17 @@ function message(msg) {
 		data = [];
 		size[0] = parseInt(v[1]);
 		size[1] = parseInt(v[2]);
+		area = [];
+		let ix = 0, iy = 0;
+		for(let y=1; y<size[1]; y+=8) {
+			area[iy] = [];
+			ix = 0;
+			for(let x=1; x<size[0]; x+=8) {
+				area[iy][ix] = -1;
+				ix++;
+			}
+			iy++;
+		}
 		info();
 		info3();
 		return;
@@ -363,15 +365,15 @@ function message(msg) {
 		info();
 		view2d();
 		let e;
-		if(xy != null) {
-			e = document.getElementById(xy);
+		if(cxy != null) {
+			e = document.getElementById(cxy);
 			e.className = "b0";
 		}
-		xy = view[0] + "-" + view[1];
-		_z = "c" + view[2];
-		e = document.getElementById(xy);
+		cxy = view[0] + "-" + view[1];
+		cz = "c" + view[2];
+		e = document.getElementById(cxy);
 		if(e != null) {
-			e.className = _z;
+			e.className = cz;
 		}
 		return;
 	}
@@ -396,9 +398,9 @@ function message(msg) {
 			v[4] = v[4].substr(1);
 		}
 		info();
-		if(xy != null) {
-			e = document.getElementById(xy);
-			e.className = _z;
+		if(cxy != null) {
+			e = document.getElementById(cxy);
+			e.className = cz;
 		}
 		return;
 	}
@@ -421,12 +423,13 @@ function message(msg) {
 			x++;
 			v[2] = v[2].substr(1);
 		}
-		//e = document.getElementById(xy);
-		//e.className = _z;
+		//e = document.getElementById(cxy);
+		//e.className = cz;
 		return;
 	}
 	if(v[0] == "V") {
 		if(v[1] == "E")  {
+			VE();
 			return;
 		}
 		if(v[1] == "B")  {
@@ -439,13 +442,16 @@ function message(msg) {
 			z.push([parseInt(v[i]), parseInt(v[i+1])]);
 			i+=2;
 		}
-		draw(parseInt(v[1]), z);
+		frame3d(parseInt(v[1]), z);
 		return;
 	}
 }
 
+let VE = function() {
+}
+
 function view2d() {
-	draw2d();
+	area2d();
 	let h = "";
 	let mx = 79;
 	let my = 53;
