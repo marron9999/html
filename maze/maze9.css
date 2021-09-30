@@ -19,7 +19,7 @@ body > div {
 	margin-left:10px;
 }
 
-#maze {
+#maze, #log {
 	border: 1px solid gray;
 	margin-right:5px;
 	width: 366px;
@@ -133,3 +133,9 @@ body > div {
 	z-index: 1;
 }
 
+#log {
+	font-size: 11px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-bottom: 7px;
+}

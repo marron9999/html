@@ -320,8 +320,8 @@ function message(msg) {
 		view[2] = parseInt(v[3]);
 		info();
 		let e;
-		if(xy != null) {
-			e = document.getElementById(xy);
+		if(cxy != null) {
+			e = document.getElementById(cxy);
 			e.className = "b0";
 		}
 		cxy = view[0] + "-" + view[1];

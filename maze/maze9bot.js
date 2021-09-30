@@ -1,9 +1,29 @@
-let wsec = 500;
-view3d = false;
+let wsec1 = 1;
+let wsec2 = 250;
+speed = true;
+
+let logc = 0;
+logging = function(log) {
+	let e = log.substr(0,3);
+	if(e == "S:V") return;
+	if(e == "S:M") return;
+	if(e == "S:R") return;
+	if(e == "S:P") return;
+	if(e == "S:T") return;
+	if(e == "S:Y") return;
+	e = document.getElementById("log");
+	let h = e.innerHTML
+		+ "<div>" + log + "</div>";
+	if(logc >= 12) {
+		h = h.substr(h.indexOf("</div>")+1+1+3+1);
+	}
+	e.innerHTML = h;
+	logc++;
+};
 
 VE = function() {
 	VE = function() { };
-	setTimeout(scan0369, wsec);
+	setTimeout(scan0369, wsec1);
 }
 
 function check9(x, y) {
@@ -36,21 +56,22 @@ function check0369() {
 
 function scan0369() {
 	let rc = 0;
-	let sec = wsec;
+	let sec = wsec1;
 	let c = unknown();
 	if(c >= 0) {
-		console.log("v " + view[0] + ", " + view[1]);
-		ws.send("S:" + "v " + view[0] + " " + view[1] + " " + c);
-		setTimeout(scan0369, 1000);
+		logging("Scan " + view[0] + " " + view[1] + " " + c);
+		ws.send("S:v " + view[0] + " " + view[1] + " " + c);
+		setTimeout(scan0369, wsec2);
 		return;
 	}
 	c = check0369();
 	if(c >= 0) {
 		data[view[1]][view[0]] = 1;
-		console.log("c " + view[0] + ", " + view[1]);
+		//logging("Build block " + view[0] + " " + view[1]);
 		let e = document.getElementById(view[0] + "-" + view[1]);
-		e.className = "b1";
-		ws.send("S:" + "c " + view[0] + " " + view[1]);
+		if(e != null)
+			e.className = "b1";
+		ws.send("S:c " + view[0] + " " + view[1]);
 		     if(c == 0) { view[1]--; view[2] = 0; }
 		else if(c == 6) { view[1]++; view[2] = 6; }
 		else if(c == 3) { view[0]++; view[2] = 3; }
@@ -58,16 +79,16 @@ function scan0369() {
 		cxy = view[0] + "-" + view[1];
 		cz = "c" + view[2];
 		e = document.getElementById(cxy);
-		e.className = cz;
-		setTimeout(scan0369, wsec);
+		if(e != null)
+			e.className = cz;
+		setTimeout(scan0369, wsec1);
 		return;
 	}
 	if(view[2] == 0) {
 		     if(check( 1,  0)) { _right(); rc = _for3(); }
 		else if(check( 0, -1)) {           rc = _for0(); }
 		else if(check(-1,  0)) { _left();  rc = _for9(); }
-		if(rc == 2) 
-			sec = 1000;
+		if(rc == 2) sec = wsec2;
 		setTimeout(scan0369, sec);
 		return;
 	}
@@ -75,8 +96,7 @@ function scan0369() {
 		     if(check(-1, 0)) { _right(); rc = _for9(); }
 		else if(check( 0, 1)) {           rc = _for6(); }
 		else if(check( 1, 0)) { _left();  rc = _for3(); }
-		if(rc == 2) 
-			sec = 1000;
+		if(rc == 2) sec = wsec2;
 		setTimeout(scan0369, sec);
 		return;
 	}
@@ -84,8 +104,7 @@ function scan0369() {
 		     if(check(0,  1)) { _right(); rc = _for6(); }
 		else if(check(1,  0)) {           rc = _for3(); }
 		else if(check(0, -1)) { _left();  rc = _for0(); }
-		if(rc == 2) 
-			sec = 1000;
+		if(rc == 2) sec = wsec2;
 		setTimeout(scan0369, sec);
 		return;
 	}
@@ -93,8 +112,7 @@ function scan0369() {
 		     if(check( 0, -1)) { _right(); rc = _for0(); }
 		else if(check(-1,  0)) {           rc = _for9(); }
 		else if(check( 0,  1)) { _left();  rc = _for6(); }
-		if(rc == 2) 
-			sec = 1000;
+		if(rc == 2) sec = wsec2;
 		setTimeout(scan0369, sec);
 		return;
 	}

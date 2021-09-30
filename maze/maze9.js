@@ -1,5 +1,4 @@
 let ws = null;
-const wait = 1000;
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 let cvs1 = null;
 let ctx1 = null;
@@ -18,28 +17,31 @@ let min = -1;
 let data = [];
 let area = [];
 
-let view3d = true;
+let logging = function(log) {};
+let speed = false;
 
 function clear() {
+	if(ctx1 == null) return;
 	ctx1.clearRect(0, 0, cvs1.width, cvs1.height);
 }
 function frame3d(c, p) {
-	if(!view3d) return;
-	ctx1.lineWidth = 1;	
-	ctx1.beginPath();
-	ctx1.moveTo(10+p[0][0],5+p[0][1]);
-	for(let i=1; i<p.length; i++) {
-		ctx1.lineTo(10+p[i][0],5+p[i][1]);
+	if(!speed) {
+		ctx1.lineWidth = 1;	
+		ctx1.beginPath();
+		ctx1.moveTo(10+p[0][0],5+p[0][1]);
+		for(let i=1; i<p.length; i++) {
+			ctx1.lineTo(10+p[i][0],5+p[i][1]);
+		}
+		ctx1.lineTo(10+p[0][0],5+p[0][1]);
+		ctx1.closePath();
+		if(c == 2) ctx1.fillStyle = 'rgb(255, 255, 192)';
+		else if(c == 3) ctx1.fillStyle = 'rgb(255, 192, 192)';
+		else if(c == 0) ctx1.fillStyle = 'rgb(192, 255, 255)';
+		else ctx1.fillStyle = 'rgb(192, 192, 192)';
+		ctx1.fill();
+		ctx1.strokeStyle = 'black';	
+		ctx1.stroke();
 	}
-	ctx1.lineTo(10+p[0][0],5+p[0][1]);
-	ctx1.closePath();
-	if(c == 2) ctx1.fillStyle = 'rgb(255, 255, 192)';
-	else if(c == 3) ctx1.fillStyle = 'rgb(255, 192, 192)';
-	else if(c == 0) ctx1.fillStyle = 'rgb(192, 255, 255)';
-	else ctx1.fillStyle = 'rgb(192, 192, 192)';
-	ctx1.fill();
-	ctx1.strokeStyle = 'black';	
-	ctx1.stroke();
 }
 function area2d() {
 	let w = cvs2.width, h = cvs2.height;
@@ -132,7 +134,7 @@ function check(x, y) {
 	if(e == 3) return true;
 	if(e == 9) {
 		console.log("9 " + x + ", " + y);
-		return false;
+		return true;
 	}
 	return false;
 }
@@ -150,8 +152,8 @@ function _for0() {
 	if(check(0, -1)) {
 		if(door(0, -1)) {
 			view[1]--;
-			console.log("o " + view[0] + ", " + view[1]);
-			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			logging("Open door " + view[0] + " " + view[1]);
+			ws.send("S:o " + view[0] + " " + view[1]);
 			let e = document.getElementById(view[0] + "-" + view[1]);
 			e.className = "b0";
 			rc++;
@@ -167,10 +169,11 @@ function _for6() {
 	if(check(0, 1)) {
 		if(door(0, 1)) {
 			view[1]++;
-			console.log("o " + view[0] + ", " + view[1]);
-			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			logging("Open door " + view[0] + " " + view[1]);
+			ws.send("S:o " + view[0] + " " + view[1]);
 			let e = document.getElementById(view[0] + "-" + view[1]);
-			e.className = "b0";
+			if(e != null)
+				e.className = "b0";
 			rc++;
 		}
 		view[1]++;
@@ -184,10 +187,11 @@ function _for3() {
 	if(check(1, 0)) {
 		if(door(1, 0)) {
 			view[0]++;
-			console.log("o " + view[0] + ", " + view[1]);
-			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			logging("Open door " + view[0] + " " + view[1]);
+			ws.send("S:o " + view[0] + " " + view[1]);
 			let e = document.getElementById(view[0] + "-" + view[1]);
-			e.className = "b0";
+			if(e != null)
+				e.className = "b0";
 			rc++;
 		}
 		view[0]++;
@@ -201,10 +205,11 @@ function _for9() {
 	if(check(-1, 0)) {
 		if(door(-1, 0)) {
 			view[0]--;
-			console.log("o " + view[0] + ", " + view[1]);
-			ws.send("S:" + "o " + view[0] + " " + view[1]);
+			logging("Open door " + view[0] + " " + view[1]);
+			ws.send("S:o " + view[0] + " " + view[1]);
 			let e = document.getElementById(view[0] + "-" + view[1]);
-			e.className = "b0";
+			if(e != null)
+				e.className = "b0";
 			rc++;
 		}
 		view[0]--;
@@ -263,8 +268,10 @@ var addr = "";
 
 function maze9() {
 	let url = wspath();
-	cvs1 = document.getElementById('maze');
-	ctx1 = cvs1.getContext('2d');
+	if(!speed) {
+		cvs1 = document.getElementById('maze');
+		ctx1 = cvs1.getContext('2d');
+	}
 	cvs2 = document.getElementById('maze2');
 	ctx2 = cvs2.getContext('2d');
 	clear();
@@ -305,6 +312,9 @@ function message(msg) {
 		return;
 	}
 	if(msg.indexOf("S:") != 0) return;
+
+	logging(msg);
+
 	let v = msg.substr(2).trim().split(" ");
 	if(v[0] == "S") {
 		data = [];
@@ -367,14 +377,14 @@ function message(msg) {
 		let e;
 		if(cxy != null) {
 			e = document.getElementById(cxy);
-			e.className = "b0";
+			if(e != null)
+				e.className = "b0";
 		}
 		cxy = view[0] + "-" + view[1];
 		cz = "c" + view[2];
 		e = document.getElementById(cxy);
-		if(e != null) {
+		if(e != null)
 			e.className = cz;
-		}
 		return;
 	}
 	if(v[0] == "T") {
@@ -400,7 +410,8 @@ function message(msg) {
 		info();
 		if(cxy != null) {
 			e = document.getElementById(cxy);
-			e.className = cz;
+			if(e != null)
+				e.className = cz;
 		}
 		return;
 	}
@@ -450,11 +461,20 @@ function message(msg) {
 let VE = function() {
 }
 
+let show = [-99999999, -99999999];
+
 function view2d() {
-	area2d();
-	let h = "";
 	let mx = 79;
 	let my = 53;
+
+	if(Math.abs(view[0] - show[0]) > parseInt(mx * 3 / 8)
+	|| Math.abs(view[1] - show[1]) > parseInt(my * 3 / 8)) {
+		show[0] = view[0];
+		show[1] = view[1];
+	} else  return;
+
+	area2d();
+	let h = "";
 	let cy = 0;
 	let sx = 0;
 	let sy = 0;
@@ -492,7 +512,8 @@ function view2d() {
 
 function mode(e) {
 	let ee = document.getElementById("map");
-	if(e.id == "view3") ee = document.getElementById("maze");
+	if(e.id == "view3")
+		ee = document.getElementById("maze");
 	if(e.checked) {
 		ee.style.display = "";
 	} else {
