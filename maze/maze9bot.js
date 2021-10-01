@@ -11,6 +11,11 @@ logging = function(log) {
 	if(e == "S:P") return;
 	if(e == "S:T") return;
 	if(e == "S:Y") return;
+	if(e == "S:Y") return;
+	if(e == "S:c") return;
+	if(e == "S:o") return;
+	if(e == "S:v") return;
+	if(e == "S:s") return;
 	e = document.getElementById("log");
 	let h = e.innerHTML
 		+ "<div>" + log + "</div>";
@@ -54,14 +59,17 @@ function check0369() {
 	return -1;
 }
 
+var time0369 = null;
+
 function scan0369() {
 	let rc = 0;
 	let sec = wsec1;
 	let c = unknown();
 	if(c >= 0) {
+		if(time0369 == null) return;
 		logging("Scan " + view[0] + " " + view[1] + " " + c);
 		ws.send("S:v " + view[0] + " " + view[1] + " " + c);
-		setTimeout(scan0369, wsec2);
+		time0369 = setTimeout(scan0369, wsec2);
 		return;
 	}
 	c = check0369();
@@ -81,7 +89,7 @@ function scan0369() {
 		e = document.getElementById(cxy);
 		if(e != null)
 			e.className = cz;
-		setTimeout(scan0369, wsec1);
+		time0369 = setTimeout(scan0369, wsec1);
 		return;
 	}
 	if(view[2] == 0) {
@@ -89,7 +97,7 @@ function scan0369() {
 		else if(check( 0, -1)) {           rc = _for0(); }
 		else if(check(-1,  0)) { _left();  rc = _for9(); }
 		if(rc == 2) sec = wsec2;
-		setTimeout(scan0369, sec);
+		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 6) {
@@ -97,7 +105,7 @@ function scan0369() {
 		else if(check( 0, 1)) {           rc = _for6(); }
 		else if(check( 1, 0)) { _left();  rc = _for3(); }
 		if(rc == 2) sec = wsec2;
-		setTimeout(scan0369, sec);
+		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 3) {
@@ -105,7 +113,7 @@ function scan0369() {
 		else if(check(1,  0)) {           rc = _for3(); }
 		else if(check(0, -1)) { _left();  rc = _for0(); }
 		if(rc == 2) sec = wsec2;
-		setTimeout(scan0369, sec);
+		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 9) {
@@ -113,7 +121,7 @@ function scan0369() {
 		else if(check(-1,  0)) {           rc = _for9(); }
 		else if(check( 0,  1)) { _left();  rc = _for6(); }
 		if(rc == 2) sec = wsec2;
-		setTimeout(scan0369, sec);
+		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 }
