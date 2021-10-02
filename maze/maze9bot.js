@@ -36,8 +36,8 @@ VE = function() {
 function check9(x, y) {
 	x += view[0];
 	y += view[1];
-	let e = data[y][x];
-	if(e == 9) {
+	let e = data[y].charAt(x);
+	if(e == "9") {
 		return true;
 	}
 	return false;
@@ -72,7 +72,9 @@ function scan0369() {
 	}
 	c = check0369();
 	if(c >= 0) {
-		data[view[1]][view[0]] = 1;
+		let cc = data[view[1]];
+		cc = cc.substr(0, view[0]) + "1" + cc.substr(view[0] + 1);
+		data[view[1]] = cc;
 		//logging("Build block " + view[0] + " " + view[1]);
 		let e = document.getElementById(view[0] + "-" + view[1]);
 		if(e != null)

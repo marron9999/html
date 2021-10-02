@@ -128,11 +128,11 @@ function send() {
 function check(x, y) {
 	x += view[0];
 	y += view[1];
-	let e = data[y][x];
-	if(e == 0) return true;
-	if(e == 2) return true;
-	if(e == 3) return true;
-	if(e == 9) {
+	let e = data[y].charAt(x);
+	if(e == "0") return true;
+	if(e == "2") return true;
+	if(e == "3") return true;
+	if(e == "9") {
 		console.log("9 " + x + ", " + y);
 		return true;
 	}
@@ -141,9 +141,9 @@ function check(x, y) {
 function door(x, y) {
 	x += view[0];
 	y += view[1];
-	e = data[y][x];
-	if(e == 2) return true;
-	if(e == 9)
+	e = data[y].charAt(x);
+	if(e == "2") return true;
+	if(e == "9")
 		return false;
 	return false;
 }
