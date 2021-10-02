@@ -61,6 +61,13 @@ function check0369() {
 	return -1;
 }
 
+function _right_() {
+	view[2] = (view[2] + 3) % 12;
+}
+function _left_() {
+	view[2] = (view[2] + 12 - 3) % 12;
+}
+
 function scan0369() {
 	timer = null;
 	let rc = 0;
@@ -89,31 +96,31 @@ function scan0369() {
 		e = document.getElementById(cxy);
 		if(e != null)
 			e.className = cz;
-		timeer = setTimeout(scan0369, wsec);
+		ws.send("S:v " + view[0] + " " + view[1] + " " + view[2]);
 		return;
 	}
 	if(view[2] == 0) {
-		     if(check( 1,  0)) { _right(); rc = _for3(); }
-		else if(check( 0, -1)) {           rc = _for0(); }
-		else if(check(-1,  0)) { _left();  rc = _for9(); }
+		     if(check( 1,  0)) { _right_(); rc = _for3(); }
+		else if(check( 0, -1)) {            rc = _for0(); }
+		else if(check(-1,  0)) { _left_();  rc = _for9(); }
 		return;
 	}
 	if(view[2] == 6) {
-		     if(check(-1, 0)) { _right(); rc = _for9(); }
-		else if(check( 0, 1)) {           rc = _for6(); }
-		else if(check( 1, 0)) { _left();  rc = _for3(); }
+		     if(check(-1, 0)) { _right_(); rc = _for9(); }
+		else if(check( 0, 1)) {            rc = _for6(); }
+		else if(check( 1, 0)) { _left_();  rc = _for3(); }
 		return;
 	}
 	if(view[2] == 3) {
-		     if(check(0,  1)) { _right(); rc = _for6(); }
-		else if(check(1,  0)) {           rc = _for3(); }
-		else if(check(0, -1)) { _left();  rc = _for0(); }
+		     if(check(0,  1)) { _right_(); rc = _for6(); }
+		else if(check(1,  0)) {            rc = _for3(); }
+		else if(check(0, -1)) { _left_();  rc = _for0(); }
 		return;
 	}
 	if(view[2] == 9) {
-		     if(check( 0, -1)) { _right(); rc = _for0(); }
-		else if(check(-1,  0)) {           rc = _for9(); }
-		else if(check( 0,  1)) { _left();  rc = _for6(); }
+		     if(check( 0, -1)) { _right_(); rc = _for0(); }
+		else if(check(-1,  0)) {            rc = _for9(); }
+		else if(check( 0,  1)) { _left_();  rc = _for6(); }
 		return;
 	}
 }
