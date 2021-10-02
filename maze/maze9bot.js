@@ -1,5 +1,5 @@
-let wsec1 = 1;
-let wsec2 = 250;
+let wsec = 10;
+let timer = null;
 speed = true;
 
 let logc = 0;
@@ -27,8 +27,10 @@ logging = function(log) {
 };
 
 VE = function() {
-	VE = function() { };
-	setTimeout(scan0369, wsec1);
+	//VE = function() { };
+	if(timer == null) {
+		timer = setTimeout(scan0369, wsec);
+	}
 }
 
 function check9(x, y) {
@@ -59,17 +61,13 @@ function check0369() {
 	return -1;
 }
 
-var time0369 = null;
-
 function scan0369() {
+	timer = null;
 	let rc = 0;
-	let sec = wsec1;
 	let c = unknown();
 	if(c >= 0) {
-		if(time0369 == null) return;
 		logging("Scan " + view[0] + " " + view[1] + " " + c);
 		ws.send("S:v " + view[0] + " " + view[1] + " " + c);
-		time0369 = setTimeout(scan0369, wsec2);
 		return;
 	}
 	c = check0369();
@@ -89,39 +87,31 @@ function scan0369() {
 		e = document.getElementById(cxy);
 		if(e != null)
 			e.className = cz;
-		time0369 = setTimeout(scan0369, wsec1);
+		timeer = setTimeout(scan0369, wsec);
 		return;
 	}
 	if(view[2] == 0) {
 		     if(check( 1,  0)) { _right(); rc = _for3(); }
 		else if(check( 0, -1)) {           rc = _for0(); }
 		else if(check(-1,  0)) { _left();  rc = _for9(); }
-		if(rc == 2) sec = wsec2;
-		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 6) {
 		     if(check(-1, 0)) { _right(); rc = _for9(); }
 		else if(check( 0, 1)) {           rc = _for6(); }
 		else if(check( 1, 0)) { _left();  rc = _for3(); }
-		if(rc == 2) sec = wsec2;
-		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 3) {
 		     if(check(0,  1)) { _right(); rc = _for6(); }
 		else if(check(1,  0)) {           rc = _for3(); }
 		else if(check(0, -1)) { _left();  rc = _for0(); }
-		if(rc == 2) sec = wsec2;
-		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 	if(view[2] == 9) {
 		     if(check( 0, -1)) { _right(); rc = _for0(); }
 		else if(check(-1,  0)) {           rc = _for9(); }
 		else if(check( 0,  1)) { _left();  rc = _for6(); }
-		if(rc == 2) sec = wsec2;
-		time0369 = setTimeout(scan0369, sec);
 		return;
 	}
 }
