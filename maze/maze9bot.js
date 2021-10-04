@@ -51,14 +51,27 @@ function unknown() {
 	return -1;
 }
 
-function check0369() {
+let pass9 = false;
+function pass(x, y) {
+	let e = data[y].charAt(x);
+	if(e == "0") return true;
+	if(e == "2") return true;
+	if(e == "3") return true;
+	if(e == "9") {
+		console.log("9 " + x + ", " + y);
+		pass9 = true;
+		return true;
+	}
+	return false;
+}
+
+function pass0369(bx, by) {
 	let c = "";
-	if(check( 0, -1)) c += "0";
-	if(check( 0,  1)) c += "6";
-	if(check(-1,  0)) c += "9";
-	if(check( 1,  0)) c += "3";
-	if(c.length == 1) return parseInt(c);
-	return -1;
+	if(pass(bx +  0, by + -1)) c += "0";
+	if(pass(bx +  0, by +  1)) c += "6";
+	if(pass(bx +  1, by +  0)) c += "3";
+	if(pass(bx + -1, by +  0)) c += "9";
+	return c;
 }
 
 function _right_() {
@@ -77,8 +90,9 @@ function scan0369() {
 		ws.send("S:v " + view[0] + " " + view[1] + " " + c);
 		return;
 	}
-	c = check0369();
-	if(c >= 0) {
+	c = pass0369(view[0], view[1]);
+	if(c.length == 1) {
+		c = parseInt(c);
 		let cc = data[view[1]];
 		cc = cc.substr(0, view[0]) + "1" + cc.substr(view[0] + 1);
 		data[view[1]] = cc;
@@ -101,25 +115,125 @@ function scan0369() {
 	}
 	if(view[2] == 0) {
 		     if(check( 1,  0)) { _right_(); rc = _for3(); }
-		else if(check( 0, -1)) {            rc = _for0(); }
+		else if(check( 0, -1)) {
+			let bx = view[0];
+			let by = view[1] - 1;
+			pass9 = false;
+			c = pass0369(bx, by);
+			while(c == "06") {
+				if(pass9) break;
+				by--;
+				c = pass0369(bx, by);
+			}
+			if((!pass9) && c == '6') {
+				while(by != view[1]) {
+					let cc = data[by];
+					cc = cc.substr(0, bx) + "1" + cc.substr(bx + 1);
+					data[by] = cc;
+					let e = document.getElementById(bx + "-" + by);
+					if(e != null)
+						e.className = "b1";
+					ws.send("S:c " + bx + " " + by);
+					by++;
+				}
+				timer = setTimeout(scan0369, wsec);
+				return;
+			}
+			rc = _for0();
+		}
 		else if(check(-1,  0)) { _left_();  rc = _for9(); }
 		return;
 	}
 	if(view[2] == 6) {
 		     if(check(-1, 0)) { _right_(); rc = _for9(); }
-		else if(check( 0, 1)) {            rc = _for6(); }
+		else if(check( 0, 1)) {
+			let bx = view[0];
+			let by = view[1] + 1;
+			pass9 = false;
+			c = pass0369(bx, by);
+			while(c == "06") {
+				if(pass9) break;
+				by++;
+				c = pass0369(bx, by);
+			}
+			if((!pass9) && c == '0') {
+				while(by != view[1]) {
+					let cc = data[by];
+					cc = cc.substr(0, bx) + "1" + cc.substr(bx + 1);
+					data[by] = cc;
+					let e = document.getElementById(bx + "-" + by);
+					if(e != null)
+						e.className = "b1";
+					ws.send("S:c " + bx + " " + by);
+					by--;
+				}
+				timer = setTimeout(scan0369, wsec);
+				return;
+			}
+			rc = _for6();
+		}
 		else if(check( 1, 0)) { _left_();  rc = _for3(); }
 		return;
 	}
 	if(view[2] == 3) {
 		     if(check(0,  1)) { _right_(); rc = _for6(); }
-		else if(check(1,  0)) {            rc = _for3(); }
+		else if(check(1,  0)) {
+			let bx = view[0] + 1;
+			let by = view[1];
+			pass9 = false;
+			c = pass0369(bx, by);
+			while(c == "39") {
+				if(pass9) break;
+				bx++;
+				c = pass0369(bx, by);
+			}
+			if((!pass9) && c == '9') {
+				while(bx != view[0]) {
+					let cc = data[by];
+					cc = cc.substr(0, bx) + "1" + cc.substr(bx + 1);
+					data[by] = cc;
+					let e = document.getElementById(bx + "-" + by);
+					if(e != null)
+						e.className = "b1";
+					ws.send("S:c " + bx + " " + by);
+					bx--;
+				}
+				timer = setTimeout(scan0369, wsec);
+				return;
+			}
+			rc = _for3();
+		}
 		else if(check(0, -1)) { _left_();  rc = _for0(); }
 		return;
 	}
 	if(view[2] == 9) {
 		     if(check( 0, -1)) { _right_(); rc = _for0(); }
-		else if(check(-1,  0)) {            rc = _for9(); }
+		else if(check(-1,  0)) {
+			let bx = view[0] - 1;
+			let by = view[1];
+			pass9 = false;
+			c = pass0369(bx, by);
+			while(c == "39") {
+				if(pass9) break;
+				bx--;
+				c = pass0369(bx, by);
+			}
+			if((!pass9) && c == '3') {
+				while(bx != view[0]) {
+					let cc = data[by];
+					cc = cc.substr(0, bx) + "1" + cc.substr(bx + 1);
+					data[by] = cc;
+					let e = document.getElementById(bx + "-" + by);
+					if(e != null)
+						e.className = "b1";
+					ws.send("S:c " + bx + " " + by);
+					bx++;
+				}
+				timer = setTimeout(scan0369, wsec);
+				return;
+			}
+			rc = _for9();
+		}
 		else if(check( 0,  1)) { _left_();  rc = _for6(); }
 		return;
 	}

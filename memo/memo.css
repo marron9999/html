@@ -6,10 +6,11 @@ body {
 code, .code {
 	border:1px solid #ccc;
 	padding: 5px 5px;
-	display:inline-block;
 	font-size:16px;
 	font-family: monospace;
+	display:inline-block;
 }
+
 li {
 	margin-bottom: 2px;
 }

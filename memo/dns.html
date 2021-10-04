@@ -11,12 +11,31 @@
 </head>
 <body>
 <h4>Config DNS</h4>
+
+<pre><code>sudo hostnamectl set-hostname sakura
+hostname</code></pre>
+
+<p>/etc/hosts</p>
+<pre><code><red>#127.0.0.1      localhost
+127.0.0.1       sakura.coderdojo-mn.jp  sakura</red></code></pre>
+
+<div class=code>hostname -f</div>
+
 <p>/etc/systemd/resolved.conf</p>
 <pre><code>[Resolve]
 <red>DNS=8.8.8.8 8.8.4.4</red></code></pre>
 
-<div class=code>sudo systemctl restart systemd-resolved<br>
-sudo systemd-resolve --status</div>
+<pre><code>sudo systemctl restart systemd-resolved
+sudo systemd-resolve --status</code></pre>
+
+<h4>Config DNS</h4>
+
+<p>/etc/systemd/timesyncd.conf</p>
+<pre><code>[Time]
+<red>NTP=ntp.ubuntsu.com</red></code></pre>
+
+<pre><code>sudo systemctl restart systemd-timesyncd.service
+sudo systemctl status systemd-timesyncd.service</code></pre>
 
 </body>
 </html>
